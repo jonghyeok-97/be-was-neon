@@ -19,45 +19,14 @@ public class RequestHandler implements Runnable {
         logger.debug("New Client Connect! Connected IP : {}, Port : {}", connection.getInetAddress(),
                 connection.getPort());
 
-        try (InputStream in = connection.getInputStream(); OutputStream out = connection.getOutputStream()) {
-            BufferedReader br = new BufferedReader(new InputStreamReader(in));
-            String line = br.readLine();
-            logger.debug("요청이 들어왔습니다!! -> {}", line);
-            final String fileName = FilePath.getFileName(line);
-            final String filePath = FilePath.findPath(fileName);
-            while (!"".equals(line = br.readLine())) {
-                logger.debug(line);
-            }
+        try (InputStream in = connection.getInputStream();
+             OutputStream out = connection.getOutputStream()) {
 
-            DataOutputStream dos = new DataOutputStream(new BufferedOutputStream(out));
+            final HttpRequest request = new HttpRequest(in);
+            final HttpResponse response = new HttpResponse(out);
 
-            File file = new File(filePath);
-            byte[] bytes = new byte[(int) file.length()];
-            try (BufferedInputStream bis = new BufferedInputStream(new FileInputStream(file))) {
-                bis.read(bytes);
-            }
-            response200Header(dos, bytes.length);
-            responseBody(dos, bytes);
-        } catch (IOException e) {
-            logger.error(e.getMessage());
-        }
-    }
-
-    private void response200Header(DataOutputStream dos, int lengthOfBodyContent) {
-        try {
-            dos.writeBytes("HTTP/1.1 200 OK \r\n");
-            dos.writeBytes("Content-Type: text/html;charset=utf-8\r\n");
-            dos.writeBytes("Content-Length: " + lengthOfBodyContent + "\r\n");
-            dos.writeBytes("\r\n");
-        } catch (IOException e) {
-            logger.error(e.getMessage());
-        }
-    }
-
-    private void responseBody(DataOutputStream dos, byte[] body) {
-        try {
-            dos.write(body, 0, body.length);
-            dos.flush();
+            final File file = request.getFile();
+            response.createResponse(file);
         } catch (IOException e) {
             logger.error(e.getMessage());
         }
