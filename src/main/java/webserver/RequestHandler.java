@@ -5,6 +5,7 @@ import java.net.Socket;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import utils.HttpReader;
 
 public class RequestHandler implements Runnable {
     private static final Logger logger = LoggerFactory.getLogger(RequestHandler.class);
@@ -21,12 +22,12 @@ public class RequestHandler implements Runnable {
 
         try (InputStream in = connection.getInputStream();
              OutputStream out = connection.getOutputStream()) {
+            final String firstLine = HttpReader.getPath(in);
+            final HttpRequestFile request = new HttpRequestFile(firstLine);
 
-            final HttpRequest request = new HttpRequest(in);
-            final HttpResponse response = new HttpResponse(out);
+            //final HttpResponse response = new HttpResponse(out);
 
-            final File file = request.getFile();
-            response.createResponse(file);
+           // response.createResponse(file);
         } catch (IOException e) {
             logger.error(e.getMessage());
         }
