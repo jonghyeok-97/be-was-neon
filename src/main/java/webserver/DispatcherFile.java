@@ -11,6 +11,7 @@ public class DispatcherFile {
     private static final String DIR_RELATIVE_PATH = "src/main/resources/static";
 
     public String getFileName(final String requestFirstLine) {
+        logger.debug("첫 줄 : {}", requestFirstLine);
         final String[] parsedLine = requestFirstLine.split(LINE_PARSER);
         final String fileName = parsedLine[1];
         return fileName;
