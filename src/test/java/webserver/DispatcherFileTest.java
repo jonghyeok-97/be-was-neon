@@ -21,13 +21,13 @@ class DispatcherFileTest {
     void getFileNameFromHttpRequestFirstLine() {
         final String fileName = dispatcherFile.getFileName("GET /index.html v.v1");
 
-        assertThat(fileName).isEqualTo("index.html");
+        assertThat(fileName).isEqualTo("/index.html");
     }
 
     @Test
     @DisplayName("파일 이름을 가지고 파일을 찾는다")
     void findFileWithFileName() {
-        final String fileName = "index.html";
+        final String fileName = "/index.html";
 
         final File actual = dispatcherFile.findFile(fileName);
         final File expected = new File(fileName);
