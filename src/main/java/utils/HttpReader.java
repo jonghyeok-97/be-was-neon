@@ -11,12 +11,10 @@ import java.io.InputStreamReader;
 public class HttpReader {
     private static final Logger logger = LoggerFactory.getLogger(HttpReader.class);
 
-    public static String getPath(final InputStream in) throws IOException {
+    public static String readURL(final InputStream in) throws IOException {
         final BufferedReader br = new BufferedReader(new InputStreamReader(in));
         final String oneLine = br.readLine();
         logger.debug("첫 줄 : {}",oneLine);
         return oneLine.split(" ")[1];
     }
-
-
 }
