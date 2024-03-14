@@ -53,6 +53,6 @@ public class RequestHandler implements Runnable {
                 .filter(url::contains)
                 .map(urlType -> requestMapper.get(urlType).apply(url))
                 .findFirst()
-                .orElseThrow();
+                .orElse(requestMapper.get(HTML_URL).apply(url));
     }
 }
