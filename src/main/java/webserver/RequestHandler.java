@@ -25,9 +25,14 @@ public class RequestHandler implements Runnable {
             final String firstLine = HttpReader.getPath(in);
             final HttpRequestFile request = new HttpRequestFile(firstLine);
 
-            //final HttpResponse response = new HttpResponse(out);
+            final BufferedOutputStream bos = new BufferedOutputStream(out);
+            final DataOutputStream dos = new DataOutputStream(bos);
 
-           // response.createResponse(file);
+            dos.writeBytes(response.get200Header());
+            final byte[] bodyDatas = response.getBodyData();
+            dos.write((bodyDatas), 0, bodyDatas.length);
+            dos.flush();
+
         } catch (IOException e) {
             logger.error(e.getMessage());
         }
