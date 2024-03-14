@@ -1,16 +1,17 @@
-package webserver;
+package webserver.request;
 
 import db.Database;
 import model.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import webserver.Response;
 
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class RegisterRequest implements Request{
+public class RegisterRequest implements Request {
     private static final Logger logger = LoggerFactory.getLogger(RegisterRequest.class);
 
     private final String path;

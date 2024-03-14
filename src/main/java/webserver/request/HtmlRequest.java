@@ -1,21 +1,21 @@
-package webserver;
+package webserver.request;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import webserver.Response;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
-public class HtmlRequest implements Request{
+public class HtmlRequest implements Request {
     private static final Logger logger = LoggerFactory.getLogger(HtmlRequest.class);
     private static final String BASE_DIR = "src/main/resources/static";
     private final String url;
 
-    // /index.html -> /static/index.html
-    // /register.html 와 /registration/index.html -> static/registration/index.html
-    // url 은 index.html , register.html , registration.html 등등이 들어옴.
+    // /index.html 란 URL이 들어오면 /static/index.html 을 응답.
+    // /register.html 와 /registration/index.html 와 registration.html 란 URL이 들어오면 static/registration/index.html 을 응답해야 함.
     public HtmlRequest(final String url) {
         this.url = url;
     }
