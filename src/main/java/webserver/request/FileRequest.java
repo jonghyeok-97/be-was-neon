@@ -15,7 +15,6 @@ public class FileRequest implements Request {
     private final String URI;
 
     // /index.html 란 URL이 들어오면 /static/index.html 을 응답.
-    // /register.html 와 /registration/index.html 와 registration.html 란 URL이 들어오면 static/registration/index.html 을 응답해야 함.
     private FileRequest(final String URI) {
         this.URI = URI;
     }
@@ -29,29 +28,22 @@ public class FileRequest implements Request {
     }
 
     public Response execute() throws IOException {
-        // <index.html> 과 <register.html> 인지 찾기
-        final FilePath path = FilePath.findFrom(URI);
-        final File file = decide(path);
-        final String fileName = file.getPath();
-        final int extensionPosition = fileName.lastIndexOf('.');
-        final String extension = fileName.substring(extensionPosition+1);
+        final File file = findFile();
+        final String extension = getExtension(file);
         final byte[] fileDatas = readFile(file);
-
         return new Response(fileDatas, extension);
     }
 
     public Response getBaseHtmlFile() throws IOException{
-        final File baseFile = new File(RESOURCES_BASE_PATH + FilePath.STATIC.fileName);
-        return new Response(readFile(baseFile), "html");
+        final File baseFile = new File(RESOURCES_BASE_PATH + URI);
+        final String extension = getExtension(baseFile);
+        return new Response(readFile(baseFile), extension);
     }
 
-    // index.html 과 register.html 을 못찾으면 static 디렉토리를 한개씩 열어보며 URL 과 일치하는 .html 파일을 찾기
-    // URL은 /registration 과 /registraion/index.html 이 들어옴 -> registration.html 을 찾게 됨.
-    private File decide(final FilePath path) {
-        if (path == FilePath.NONE) {
-            return findFile();
-        }
-        return new File(path.relativePath);
+    private String getExtension(final File file) {
+        final String fileName = file.getPath();
+        final int extensionPosition = fileName.lastIndexOf('.');
+        return fileName.substring(extensionPosition+1);
     }
 
     private File findFile() {
@@ -89,26 +81,5 @@ public class FileRequest implements Request {
             bis.read(htmlFileDatas);
         }
         return htmlFileDatas;
-    }
-
-    private enum FilePath {
-        STATIC("/index.html", RESOURCES_BASE_PATH + "/index.html"),
-        REGISTRATION("/register.html", RESOURCES_BASE_PATH + "/registration/index.html"),
-        NONE("", "");
-
-        private final String fileName;
-        private final String relativePath;
-
-        FilePath(final String fileName, final String relativePath) {
-            this.fileName = fileName;
-            this.relativePath = relativePath;
-        }
-
-        private static FilePath findFrom(final String fileName) {
-            return Stream.of(values())
-                    .filter(path -> path.fileName.equals(fileName))
-                    .findFirst()
-                    .orElse(NONE);
-        }
     }
 }

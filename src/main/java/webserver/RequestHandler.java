@@ -15,7 +15,7 @@ import java.util.function.Function;
 public class RequestHandler implements Runnable {
     private static final Logger logger = LoggerFactory.getLogger(RequestHandler.class);
     private static final String REGISTER_URL = "create";
-    private static final String HTML_URL = ".";
+    private static final String FILE_EXTENSION = ".";
 
     private final Socket connection;
     private final Map<String, Function<String, Request>> requestMapper;
@@ -24,7 +24,7 @@ public class RequestHandler implements Runnable {
         this.connection = connectionSocket;
         this.requestMapper = Map.ofEntries(
                 Map.entry(REGISTER_URL, url -> new RegisterRequest(url)),
-                Map.entry(HTML_URL, url -> FileRequest.from(url))
+                Map.entry(FILE_EXTENSION, url -> FileRequest.from(url))
         );
     }
 
@@ -53,6 +53,6 @@ public class RequestHandler implements Runnable {
                 .filter(url::contains)
                 .map(urlType -> requestMapper.get(urlType).apply(url))
                 .findFirst()
-                .orElse(requestMapper.get(HTML_URL).apply(url));
+                .orElse(requestMapper.get(FILE_EXTENSION).apply(url));
     }
 }
