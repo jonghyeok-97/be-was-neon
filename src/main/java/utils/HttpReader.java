@@ -15,6 +15,10 @@ public class HttpReader {
         final BufferedReader br = new BufferedReader(new InputStreamReader(in));
         final String oneLine = br.readLine();
         logger.debug("첫 줄 : {}",oneLine);
+        String line;
+        while (!(line = br.readLine()).isEmpty()) {
+            logger.debug("헤더 필드: {}", line);
+        }
         return oneLine.split(" ")[1];
     }
 }

@@ -78,8 +78,9 @@ public class FileRequest implements Request {
     }
 
     private boolean hasExtension(final String fileName) {
-        return fileName.endsWith(".html") || fileName.endsWith(".css") || fileName.endsWith("ico")
-                || fileName.endsWith(".svg");
+        return fileName.endsWith(".html") || fileName.endsWith(".css") || fileName.endsWith(".ico")
+                || fileName.endsWith(".svg") || fileName.endsWith(".png") || fileName.endsWith(".jpg")
+                || fileName.endsWith(".js") || fileName.endsWith(".jpeg");
     }
 
     private byte[] readFile(final File file) throws IOException{

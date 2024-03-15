@@ -15,7 +15,7 @@ import java.util.function.Function;
 public class RequestHandler implements Runnable {
     private static final Logger logger = LoggerFactory.getLogger(RequestHandler.class);
     private static final String REGISTER_URL = "create";
-    private static final String HTML_URL = ".html";
+    private static final String HTML_URL = ".";
 
     private final Socket connection;
     private final Map<String, Function<String, Request>> requestMapper;
