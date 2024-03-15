@@ -3,7 +3,7 @@ package webserver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import utils.HttpReader;
-import webserver.request.HtmlRequest;
+import webserver.request.FileRequest;
 import webserver.request.RegisterRequest;
 import webserver.request.Request;
 
@@ -24,7 +24,7 @@ public class RequestHandler implements Runnable {
         this.connection = connectionSocket;
         this.requestMapper = Map.ofEntries(
                 Map.entry(REGISTER_URL, url -> new RegisterRequest(url)),
-                Map.entry(HTML_URL, url -> HtmlRequest.from(url))
+                Map.entry(HTML_URL, url -> FileRequest.from(url))
         );
     }
 
