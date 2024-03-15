@@ -16,12 +16,16 @@ public class HtmlRequest implements Request {
 
     // /index.html 란 URL이 들어오면 /static/index.html 을 응답.
     // /register.html 와 /registration/index.html 와 registration.html 란 URL이 들어오면 static/registration/index.html 을 응답해야 함.
-    public HtmlRequest(final String url) {
+    private HtmlRequest(final String url) {
         this.url = url;
     }
 
-    public HtmlRequest() {
-        this("");
+    public static HtmlRequest from(final String url) {
+        return new HtmlRequest(url);
+    }
+
+    public static HtmlRequest fromDefaultURL() {
+        return new HtmlRequest("");
     }
 
     public Response execute() throws IOException {

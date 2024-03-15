@@ -37,7 +37,7 @@ public class RegisterRequest implements Request {
         logger.debug("저장되는 User : {}", user);
         Database.addUser(user);
 
-        return new Response(new HtmlRequest().getBaseHtmlFile());
+        return new Response(HtmlRequest.fromDefaultURL().getBaseHtmlFile());
     }
 
 }

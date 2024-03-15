@@ -24,7 +24,7 @@ public class RequestHandler implements Runnable {
         this.connection = connectionSocket;
         this.requestMapper = Map.ofEntries(
                 Map.entry(REGISTER_URL, url -> new RegisterRequest(url)),
-                Map.entry(HTML_URL, url -> new HtmlRequest(url))
+                Map.entry(HTML_URL, url -> HtmlRequest.from(url))
         );
     }
 
