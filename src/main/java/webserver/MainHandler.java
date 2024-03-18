@@ -2,10 +2,13 @@ package webserver;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import webserver.request.HttpRequestFactory;
 import webserver.request.line.HttpRequestLine;
 
 import java.io.*;
 import java.net.Socket;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class MainHandler implements Runnable {
     private static final Logger logger = LoggerFactory.getLogger(MainHandler.class);
@@ -21,8 +24,10 @@ public class MainHandler implements Runnable {
                 connection.getPort());
 
         try (InputStream in = connection.getInputStream(); OutputStream out = connection.getOutputStream()) {
-            final String line = getRequestLine(in);
-            final HttpRequestLine requestLine = new HttpRequestLine(line);
+            final List<String> requestMessage = getRequestMessage(in);
+            final HttpRequestFactory factory = new HttpRequestFactory(requestMessage);
+            final HttpRequestLine requestLine = factory.createRequestLine();
+
             final File file = requestLine.execute();
             final Response response = new Response(file);
 
@@ -37,13 +42,17 @@ public class MainHandler implements Runnable {
         }
     }
 
-    private String getRequestLine(final InputStream in) throws IOException{
+    private List<String> getRequestMessage(final InputStream in) throws IOException{
         final BufferedReader br = new BufferedReader(new InputStreamReader(in));
         final String requesLine = br.readLine();
-        String line;
-        while (!(line = br.readLine()).isEmpty()) {
-            logger.debug("헤더필드 : {}", line);
-        }
-        return requesLine;
+        return br.lines()
+                .collect(Collectors.toList());
+
+        //lines.forEach(line -> logger.debug("라인 : {}", line));
+//        String line;
+//        while (!(line = br.readLine()).isEmpty()) {
+//            logger.debug("헤더필드 : {}", line);
+//        }
+     //   return requesLine;
     }
 }
