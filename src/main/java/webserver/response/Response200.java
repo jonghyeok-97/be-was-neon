@@ -1,15 +1,24 @@
 package webserver.response;
 
-import webserver.HttpStandard;
-
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 
-import static webserver.HttpStandard.CARRIAGE_LINE_FEED;
+import static webserver.response.Response.*;
 
 public class Response200 implements Response {
+
+    private enum StatusLine {
+        OK("HTTP/1.1 200 OK");
+
+        private final String line;
+
+        StatusLine(final String _line) {
+            line = _line;
+        }
+    }
+
     private final File file;
 
     public Response200(final File file) {
@@ -18,7 +27,7 @@ public class Response200 implements Response {
 
     public String getHeader() throws IOException{
         final StringBuilder header = new StringBuilder();
-        header.append(addNewLine("HTTP/1.1 200 OK "))
+        header.append(addNewLine(StatusLine.OK.line))
                 .append(addNewLine("Content-Type: " + findSubType()))
                 .append(addNewLine(addNewLine("Content-Length: " + getBody().length)));
 
@@ -31,10 +40,6 @@ public class Response200 implements Response {
             bis.read(fileDatas);
         }
         return fileDatas;
-    }
-
-    private String addNewLine(final String line) {
-        return line + CARRIAGE_LINE_FEED.getValue();
     }
 
     private String findSubType() {

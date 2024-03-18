@@ -1,26 +1,31 @@
 package webserver.response;
 
-import webserver.response.Response;
-
-import java.io.IOException;
+import static webserver.response.Response.*;
 
 public class Response300 implements Response {
-    private static final String REDIRECT_PATH = "src/main/resources/static/index.html";
+
+    private enum StatusLine {
+        Found("HTTP/1.1 302 Found ");
+
+        private final String line;
+
+        StatusLine(final String _line) {
+            line = _line;
+        }
+    }
+
+    private final String REDIRECT_PATH = "src/main/resources/static/index.html";
 
     @Override
-    public String getHeader() throws IOException{
+    public String getHeader() {
         final StringBuilder result = new StringBuilder();
-        result.append(addNewLine("HTTP/1.1 302 Found "))
+        result.append(addNewLine(StatusLine.Found.line))
                 .append(addNewLine("Location: " + REDIRECT_PATH));
         return result.toString();
     }
 
     @Override
-    public byte[] getBody() throws IOException {
+    public byte[] getBody() {
         return new byte[0];
-    }
-
-    private String addNewLine(final String line) {
-        return line + "\r\n";
     }
 }
