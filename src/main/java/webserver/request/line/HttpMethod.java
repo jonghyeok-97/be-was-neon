@@ -14,6 +14,10 @@ public class HttpMethod {
         type = Type.match(method);
     }
 
+    public boolean isPOST() {
+        return type == Type.POST;
+    }
+
     private enum Type {
         GET, POST;
 
