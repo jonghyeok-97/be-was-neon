@@ -2,17 +2,15 @@ package webserver;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import webserver.request.HttpRequestFactory;
-import webserver.request.body.HttpRequestBody;
-import webserver.request.line.HttpRequestLine;
+import webserver.request.Request;
+import webserver.request.RequestFactory;
+import webserver.request.body.RequestBody;
+import webserver.request.line.RequestLine;
+import webserver.response.Response;
 
 import java.io.*;
-import java.net.HttpURLConnection;
 import java.net.Socket;
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class MainHandler implements Runnable {
     private static final Logger logger = LoggerFactory.getLogger(MainHandler.class);
@@ -29,11 +27,10 @@ public class MainHandler implements Runnable {
 
         try (InputStream in = connection.getInputStream(); OutputStream out = connection.getOutputStream()) {
             final String requestMessage = getRequestMessage(in);
-            final HttpRequestFactory factory = new HttpRequestFactory(requestMessage);
-            final HttpRequestLine requestLine = factory.createRequestLine();
-            final Optional<HttpRequestBody> optRequestBody = factory.createRequestBody(requestLine);
-            final HttpRequest httpRequest = new HttpRequest(requestLine, optRequestBody);
-
+            final RequestFactory factory = new RequestFactory(requestMessage);
+            final RequestLine requestLine = factory.createRequestLine();
+            final Optional<RequestBody> optRequestBody = factory.createRequestBody(requestLine);
+            final Request httpRequest = new Request(requestLine, optRequestBody);
 
             final Response response = httpRequest.respond();
 
