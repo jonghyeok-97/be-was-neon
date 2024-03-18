@@ -1,5 +1,6 @@
 package webserver.request;
 
+import webserver.request.body.HttpRequestBody;
 import webserver.request.line.HttpRequestLine;
 
 import java.util.List;
@@ -16,5 +17,8 @@ public class HttpRequestFactory {
         return new HttpRequestLine(requestLine);
     }
 
-
+    public HttpRequestBody createRequestBody() {
+        final String body = requestMessage.get(requestMessage.size() - 1);
+        return new HttpRequestBody(body);
+    }
 }
