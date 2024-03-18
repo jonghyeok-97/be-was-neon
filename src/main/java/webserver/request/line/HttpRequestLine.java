@@ -20,6 +20,10 @@ public class HttpRequestLine {
         uri = new HttpUri(splited[URI_POSITION]);
     }
 
+    public boolean isPOST() {
+        return method.isPOST();
+    }
+
     public File execute() {
         return uri.respond();
     }
