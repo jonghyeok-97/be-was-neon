@@ -7,9 +7,12 @@ import webserver.request.body.HttpRequestBody;
 import webserver.request.line.HttpRequestLine;
 
 import java.io.*;
+import java.net.HttpURLConnection;
 import java.net.Socket;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class MainHandler implements Runnable {
     private static final Logger logger = LoggerFactory.getLogger(MainHandler.class);
@@ -25,16 +28,14 @@ public class MainHandler implements Runnable {
                 connection.getPort());
 
         try (InputStream in = connection.getInputStream(); OutputStream out = connection.getOutputStream()) {
-            final List<String> requestMessage = getRequestMessage(in);
+            final String requestMessage = getRequestMessage(in);
             final HttpRequestFactory factory = new HttpRequestFactory(requestMessage);
             final HttpRequestLine requestLine = factory.createRequestLine();
+            final Optional<HttpRequestBody> optRequestBody = factory.createRequestBody(requestLine);
+            final HttpRequest httpRequest = new HttpRequest(requestLine, optRequestBody);
 
-            if (requestLine.isPOST()) {
-                HttpRequestBody requestBody = factory.createRequestBody();
-            }
 
-            final File file = requestLine.execute();
-            final Response response = new Response(file);
+            final Response response = httpRequest.respond();
 
             final BufferedOutputStream bos = new BufferedOutputStream(out);
             final DataOutputStream dos = new DataOutputStream(bos);
@@ -47,13 +48,11 @@ public class MainHandler implements Runnable {
         }
     }
 
-    private List<String> getRequestMessage(final InputStream in) throws IOException {
+    private String getRequestMessage(final InputStream in) throws IOException {
         final StringBuilder lines = new StringBuilder();
         do {
             lines.append((char) in.read());
         } while (in.available() > 0);
-
-        return Stream.of(lines.toString().split("\r\n"))
-                .collect(Collectors.toList());
+        return lines.toString();
     }
 }

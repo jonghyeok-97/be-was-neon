@@ -2,6 +2,7 @@ package webserver.request.line;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import webserver.Response;
 
 import java.io.File;
 
@@ -14,7 +15,7 @@ public class HttpRequestLine {
 
     // HttpMethod 는 requestLine에서 의 Method가 GET, POST인지 유효성 검증역할.
     public HttpRequestLine(final String requestLine) {
-        logger.debug("리퀘스트 라인 : {}", requestLine);
+   //     logger.debug("리퀘스트 라인 : {}", requestLine);
         final String[] splited = requestLine.split(" ");
         method = new HttpMethod(splited[METHOD_POSITION]);
         uri = new HttpUri(splited[URI_POSITION]);
@@ -24,7 +25,9 @@ public class HttpRequestLine {
         return method.isPOST();
     }
 
-    public File execute() {
-        return uri.respond();
+    public Response execute() {
+
+        final File file = uri.findFile();
+        return new Response(file);
     }
 }
