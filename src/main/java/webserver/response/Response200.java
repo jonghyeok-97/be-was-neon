@@ -1,9 +1,13 @@
 package webserver.response;
 
+import webserver.HttpStandard;
+
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+
+import static webserver.HttpStandard.CARRIAGE_LINE_FEED;
 
 public class Response200 implements Response {
     private final File file;
@@ -30,7 +34,7 @@ public class Response200 implements Response {
     }
 
     private String addNewLine(final String line) {
-        return line + "\r\n";
+        return line + CARRIAGE_LINE_FEED.getValue();
     }
 
     private String findSubType() {

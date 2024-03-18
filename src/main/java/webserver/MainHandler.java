@@ -29,10 +29,10 @@ public class MainHandler implements Runnable {
             final String requestMessage = getRequestMessage(in);
             final RequestFactory factory = new RequestFactory(requestMessage);
             final RequestLine requestLine = factory.createRequestLine();
-            final Optional<RequestBody> optRequestBody = factory.createRequestBody(requestLine);
-            final Request httpRequest = new Request(requestLine, optRequestBody);
+            final Optional<RequestBody> optRequestBody = factory.createOptRequestBody(requestLine);
+            final Request request = new Request(requestLine, optRequestBody);
 
-            final Response response = httpRequest.respond();
+            final Response response = request.respond();
 
             final BufferedOutputStream bos = new BufferedOutputStream(out);
             final DataOutputStream dos = new DataOutputStream(bos);
