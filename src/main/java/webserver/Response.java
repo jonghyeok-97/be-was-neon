@@ -1,50 +1,41 @@
 package webserver;
 
-import java.util.Map;
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 
 public class Response {
-    private final Map<String, String> imageMapper;
-    private final byte[] htmlFileDatas;
-    private final String extension;
+    private final File file;
 
-    public Response(final byte[] htmlFileDatas, final String extension) {
-        this.htmlFileDatas = htmlFileDatas;
-        this.extension = extension;
-        imageMapper = Map.ofEntries(
-                Map.entry("html", "text/html;charset=utf-8"),
-                Map.entry("css", "text/css"),
-                Map.entry("svg", "image/svg+xml"),
-                Map.entry("ico", "image/x-icon"),
-                Map.entry("png", "image/png"),
-                Map.entry("jpg", "image/jpeg"),
-                Map.entry("jpeg", "image/jpeg"),
-                Map.entry("js", "application/javascript")
-        );
+    public Response(final File file) {
+        this.file = file;
     }
 
-    public String get200Header() {
-        final String type = find(extension);
+    public String getHeader() throws IOException{
         final StringBuilder header = new StringBuilder();
         header.append(addNewLine("HTTP/1.1 200 OK "))
-                .append(addNewLine("Content-Type: " + type))
-                .append(addNewLine(addNewLine("Content-Length: " + htmlFileDatas.length)));
+                .append(addNewLine("Content-Type: " + findSubType()))
+                .append(addNewLine(addNewLine("Content-Length: " + getBody().length)));
 
         return header.toString();
     }
 
-    private String find(final String extensionType) {
-        return imageMapper.keySet().stream()
-                .filter(type -> type.equals(extensionType))
-                .map(type -> imageMapper.get(type))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("404"));
-    }
-
     private String addNewLine(final String line) {
-        return line + System.lineSeparator();
+        return line + "\r\n";
     }
 
-    public byte[] getBodyData() {
-        return htmlFileDatas;
+    private String findSubType() {
+        final String path = file.getPath();
+        final String mime = path.substring(path.lastIndexOf('.'));
+        return MIME.findSubType(mime);
+    }
+
+    public byte[] getBody() throws IOException {
+        final byte[] fileDatas = new byte[(int) file.length()];
+        try (final BufferedInputStream bis = new BufferedInputStream(new FileInputStream(file))) {
+            bis.read(fileDatas);
+        }
+        return fileDatas;
     }
 }
