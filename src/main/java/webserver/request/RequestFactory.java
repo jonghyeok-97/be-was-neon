@@ -26,7 +26,7 @@ public class RequestFactory {
         return new RequestLine(requestLine);
     }
 
-    public Optional<RequestBody> createRequestBody(final RequestLine requestLine) {
+    public Optional<RequestBody> createOptRequestBody(final RequestLine requestLine) {
         if (requestLine.isPOST()) {
             final String body = getLine(requestMessages.size() - 1);
             return Optional.of(new RequestBody(body));

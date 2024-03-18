@@ -7,18 +7,18 @@ import webserver.request.line.RequestLine;
 import java.util.Optional;
 
 public class Request {
-    private final RequestLine requestLine;
-    private final Optional<RequestBody> body;
+    private final RequestLine line;
+    private final Optional<RequestBody> optBody;
 
-    public Request(final RequestLine _requestLine, final Optional<RequestBody> _body) {
-        this.requestLine = _requestLine;
-        this.body = _body;
+    public Request(final RequestLine _line, final Optional<RequestBody> _optBody) {
+        this.line = _line;
+        this.optBody = _optBody;
     }
 
     public Response respond() {
-        body.ifPresent(
+        optBody.ifPresent(
                 RequestBody::addUserToDB
         );
-        return requestLine.execute();
+        return line.respond();
     }
 }
