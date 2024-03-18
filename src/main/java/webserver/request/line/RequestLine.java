@@ -2,11 +2,9 @@ package webserver.request.line;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import webserver.response.Response;
-import webserver.response.Response200;
-import webserver.response.Response300;
 
 import java.io.File;
+import java.util.Optional;
 import java.util.regex.PatternSyntaxException;
 
 public class RequestLine {
@@ -32,11 +30,10 @@ public class RequestLine {
         return method.isPOST();
     }
 
-    public Response respond() {
+    public Optional<File> getFile() {
         if (method.isPOST()) {
-            final File file = uri.findFile();
-            return new Response200(file);
+            return Optional.of(uri.findFile());
         }
-        return new Response300();
+        return Optional.empty();
     }
 }
