@@ -1,11 +1,11 @@
-package webserver;
+package webserver.response;
 
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 
-public class Response200 implements Response{
+public class Response200 implements Response {
     private final File file;
 
     public Response200(final File file) {

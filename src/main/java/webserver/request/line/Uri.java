@@ -5,12 +5,12 @@ import org.slf4j.LoggerFactory;
 
 import java.io.File;
 
-public class HttpUri {
-    private final Logger logger = LoggerFactory.getLogger(HttpUri.class);
+public class Uri {
+    private final Logger logger = LoggerFactory.getLogger(Uri.class);
     static final String RESOURCES_BASE_PATH = "src/main/resources/static";
     private final String uri;
 
-    public HttpUri(final String uri) {
+    public Uri(final String uri) {
         logger.debug("URI : {}", uri);
         this.uri = uri;
         validateExtension(uri);

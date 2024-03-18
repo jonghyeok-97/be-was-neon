@@ -1,8 +1,10 @@
-package webserver;
+package webserver.response;
+
+import webserver.response.Response;
 
 import java.io.IOException;
 
-public class Response300 implements Response{
+public class Response300 implements Response {
     private static final String REDIRECT_PATH = "src/main/resources/static/index.html";
 
     @Override

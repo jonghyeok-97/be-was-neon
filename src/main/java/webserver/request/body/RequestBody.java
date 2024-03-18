@@ -10,11 +10,11 @@ import java.util.List;
 import java.util.regex.PatternSyntaxException;
 import java.util.stream.Collectors;
 
-public class HttpRequestBody {
-    private final Logger logger = LoggerFactory.getLogger(HttpRequestBody.class);
+public class RequestBody {
+    private final Logger logger = LoggerFactory.getLogger(RequestBody.class);
     private final String queryParameters;
 
-    public HttpRequestBody(final String _body) {
+    public RequestBody(final String _body) {
         queryParameters = _body;
     }
 
