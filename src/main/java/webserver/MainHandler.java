@@ -47,17 +47,13 @@ public class MainHandler implements Runnable {
         }
     }
 
-    private List<String> getRequestMessage(final InputStream in) throws IOException{
-        final BufferedReader br = new BufferedReader(new InputStreamReader(in));
-        final String requesLine = br.readLine();
-        return br.lines()
-                .collect(Collectors.toList());
+    private List<String> getRequestMessage(final InputStream in) throws IOException {
+        final StringBuilder lines = new StringBuilder();
+        do {
+            lines.append((char) in.read());
+        } while (in.available() > 0);
 
-        //lines.forEach(line -> logger.debug("라인 : {}", line));
-//        String line;
-//        while (!(line = br.readLine()).isEmpty()) {
-//            logger.debug("헤더필드 : {}", line);
-//        }
-     //   return requesLine;
+        return Stream.of(lines.toString().split("\r\n"))
+                .collect(Collectors.toList());
     }
 }
