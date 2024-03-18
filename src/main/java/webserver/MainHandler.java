@@ -3,6 +3,7 @@ package webserver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import webserver.request.HttpRequestFactory;
+import webserver.request.body.HttpRequestBody;
 import webserver.request.line.HttpRequestLine;
 
 import java.io.*;
@@ -27,6 +28,10 @@ public class MainHandler implements Runnable {
             final List<String> requestMessage = getRequestMessage(in);
             final HttpRequestFactory factory = new HttpRequestFactory(requestMessage);
             final HttpRequestLine requestLine = factory.createRequestLine();
+
+            if (requestLine.isPOST()) {
+                HttpRequestBody requestBody = factory.createRequestBody();
+            }
 
             final File file = requestLine.execute();
             final Response response = new Response(file);
