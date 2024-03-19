@@ -1,9 +1,11 @@
 package webserver.response;
 
-import static webserver.response.Response.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import static webserver.response.Response.addNewLine;
 
 public class Response300 implements Response {
-
     private enum StatusLine {
         Found("HTTP/1.1 302 Found ");
 
@@ -14,13 +16,14 @@ public class Response300 implements Response {
         }
     }
 
-    private final String REDIRECT_PATH = "src/main/resources/static/index.html";
+    private final Logger logger = LoggerFactory.getLogger(Response300.class);
+    private final String REDIRECT_PATH = "/index.html";
 
     @Override
     public String getHeader() {
         final StringBuilder result = new StringBuilder();
         result.append(addNewLine(StatusLine.Found.line))
-                .append(addNewLine("Location: " + REDIRECT_PATH));
+                .append(addNewLine(addNewLine("Location: " + REDIRECT_PATH)));
         return result.toString();
     }
 

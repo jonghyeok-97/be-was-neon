@@ -19,6 +19,7 @@ public class RequestFactory {
     public RequestFactory(final String requestMessage) {
         requestMessages = Stream.of(requestMessage.split(CARRIAGE_LINE_FEED.getValue()))
                 .collect(Collectors.toList());
+        requestMessages.forEach(s -> logger.debug("들어온 메시지 : {}", s));
     }
 
     public RequestLine createRequestLine() {
