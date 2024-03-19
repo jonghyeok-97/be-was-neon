@@ -8,14 +8,16 @@ import java.util.Optional;
 import java.util.regex.PatternSyntaxException;
 
 public class RequestLine {
-    private final Logger logger = LoggerFactory.getLogger(RequestLine.class);
     private static final int METHOD_POSITION = 0;
     private static final int URI_POSITION = 1;
+
+    private final Logger logger = LoggerFactory.getLogger(RequestLine.class);
     private final Method method;
     private final Uri uri;
 
     // Method 는 requestLine에서 의 Method가 GET, POST인지 유효성 검증역할.
     public RequestLine(final String requestLine) {
+        logger.debug("RequestLine:{}", requestLine);
         try {
             final String[] splited = requestLine.split(" ");
             method = new Method(splited[METHOD_POSITION]);
@@ -30,10 +32,11 @@ public class RequestLine {
         return method.isPOST();
     }
 
-    public Optional<File> getFile() {
+    public Optional<File> findFile() {
         if (method.isPOST()) {
-            return Optional.of(uri.findFile());
+            return Optional.empty();
         }
-        return Optional.empty();
+        return Optional.of(uri.findFile());
+
     }
 }
