@@ -7,7 +7,7 @@ import java.io.File;
 
 public class Uri {
     private final Logger logger = LoggerFactory.getLogger(Uri.class);
-    static final String RESOURCES_BASE_PATH = "src/main/resources/static";
+    private static final String RESOURCES_BASE_PATH = "src/main/resources/static";
     private final String uri;
 
     public Uri(final String uri) {

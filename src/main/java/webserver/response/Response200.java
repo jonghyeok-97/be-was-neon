@@ -31,6 +31,7 @@ public class Response200 implements Response {
         this.datas = read(file);
     }
 
+    // addNewLine은 Response란 인터페이스의 static 메서드
     @Override
     public String getHeader() {
         final StringBuilder header = new StringBuilder();
