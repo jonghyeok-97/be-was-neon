@@ -13,15 +13,15 @@ public class Uri {
     public Uri(final String uri) {
         logger.debug("URI : {}", uri);
         this.uri = uri;
-        validateExtension(uri);
+        validate(uri);
     }
 
     public File findFile() {
         return new File(RESOURCES_BASE_PATH + uri);
     }
 
-    private void validateExtension(final String uri) {
-        if (!uri.contains(".")) {
+    private void validate(final String uri) {
+        if (!uri.contains(".") && !uri.contains("create")) {
             throw new IllegalArgumentException("404에러");
         }
     }
