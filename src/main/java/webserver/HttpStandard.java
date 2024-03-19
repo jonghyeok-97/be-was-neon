@@ -12,4 +12,8 @@ public enum HttpStandard {
     public String getValue() {
         return value;
     }
+
+    public static String addNewLine(final String line) {
+        return line + CARRIAGE_LINE_FEED.value;
+    }
 }
