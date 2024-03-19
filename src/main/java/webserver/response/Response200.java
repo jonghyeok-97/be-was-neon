@@ -1,5 +1,8 @@
 package webserver.response;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -8,7 +11,6 @@ import java.io.IOException;
 import static webserver.response.Response.*;
 
 public class Response200 implements Response {
-
     private enum StatusLine {
         OK("HTTP/1.1 200 OK");
 
@@ -19,22 +21,31 @@ public class Response200 implements Response {
         }
     }
 
+    private final Logger logger = LoggerFactory.getLogger(Response200.class);
     private final File file;
+    private final byte[] datas;
 
-    public Response200(final File file) {
+    // byte[]를 필드로 가지도록 해서 파일을 여러번 읽지 않도록 함.
+    public Response200(final File file) throws IOException{
         this.file = file;
+        this.datas = read(file);
     }
 
-    public String getHeader() throws IOException{
+    @Override
+    public String getHeader() {
         final StringBuilder header = new StringBuilder();
         header.append(addNewLine(StatusLine.OK.line))
                 .append(addNewLine("Content-Type: " + findSubType()))
                 .append(addNewLine(addNewLine("Content-Length: " + getBody().length)));
-
         return header.toString();
     }
 
-    public byte[] getBody() throws IOException {
+    @Override
+    public byte[] getBody() {
+        return datas;
+    }
+
+    private byte[] read(final File file) throws IOException {
         final byte[] fileDatas = new byte[(int) file.length()];
         try (final BufferedInputStream bis = new BufferedInputStream(new FileInputStream(file))) {
             bis.read(fileDatas);

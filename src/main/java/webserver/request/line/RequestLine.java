@@ -10,6 +10,7 @@ import java.util.regex.PatternSyntaxException;
 public class RequestLine {
     private static final int METHOD_POSITION = 0;
     private static final int URI_POSITION = 1;
+    private static final String REQUESTLINE_PARSOR = " ";
 
     private final Logger logger = LoggerFactory.getLogger(RequestLine.class);
     private final Method method;
@@ -19,7 +20,7 @@ public class RequestLine {
     public RequestLine(final String requestLine) {
         logger.debug("RequestLine:{}", requestLine);
         try {
-            final String[] splited = requestLine.split(" ");
+            final String[] splited = requestLine.split(REQUESTLINE_PARSOR);
             method = new Method(splited[METHOD_POSITION]);
             uri = new Uri(splited[URI_POSITION]);
         } catch (PatternSyntaxException e) {
@@ -37,6 +38,5 @@ public class RequestLine {
             return Optional.empty();
         }
         return Optional.of(uri.findFile());
-
     }
 }
