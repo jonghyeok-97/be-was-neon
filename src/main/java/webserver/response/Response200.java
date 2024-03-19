@@ -8,7 +8,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 
-import static webserver.response.Response.*;
+import static webserver.HttpStandard.addNewLine;
 
 public class Response200 implements Response {
     private enum StatusLine {

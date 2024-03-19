@@ -3,7 +3,7 @@ package webserver.response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import static webserver.response.Response.addNewLine;
+import static webserver.HttpStandard.addNewLine;
 
 public class Response300 implements Response {
     private enum StatusLine {
