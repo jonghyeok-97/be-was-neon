@@ -1,5 +1,7 @@
 package model;
 
+import java.util.Objects;
+
 public class User {
     private String userId;
     private String password;
@@ -21,6 +23,10 @@ public class User {
 
     public String getName() {
         return name;
+    }
+
+    public boolean isSame(final User other) {
+        return Objects.equals(userId, other.userId) && Objects.equals(password, other.password);
     }
 
     @Override
