@@ -19,6 +19,7 @@ public class Response300 implements Response {
     private final Logger logger = LoggerFactory.getLogger(Response300.class);
     private final String REDIRECT_PATH = "/index.html";
 
+    // addNewLine은 Response란 인터페이스의 static 메서드
     @Override
     public String getHeader() {
         final StringBuilder result = new StringBuilder();
