@@ -22,7 +22,6 @@ public class Request {
     private final RequestHeader headers;
     private final Optional<RequestBody> optBody;
 
-
     // inner class 사용해서 파싱
     // inner class는 Request를 만들 때만 사용하기 때문에 private 지정
     public Request(final String requestMessage) {
@@ -36,15 +35,6 @@ public class Request {
             logger.error(e.getMessage());
             throw new IllegalArgumentException("404에러");
         }
-    }
-
-    public Response respond() throws IOException {
-        optBody.ifPresent(RequestBody::addUserToDB);
-        final Optional<File> optFile = line.findFile();
-        if (optFile.isPresent()) {
-            return new Response200(optFile.get());
-        }
-        return new Response300();
     }
 
     private class RequestFactory {
@@ -81,4 +71,12 @@ public class Request {
         }
     }
 
+    public Response respond() throws IOException {
+        optBody.ifPresent(RequestBody::addUserToDB);
+        final Optional<File> optFile = line.findFile();
+        if (optFile.isPresent()) {
+            return new Response200(optFile.get());
+        }
+        return new Response300();
+    }
 }

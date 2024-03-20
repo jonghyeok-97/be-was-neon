@@ -1,7 +1,7 @@
 package webserver;
 
 public enum HttpStandard {
-    CARRIAGE_LINE_FEED("\r\n");
+    CRLF("\r\n");
 
     private final String value;
 
@@ -14,6 +14,6 @@ public enum HttpStandard {
     }
 
     public static String addNewLine(final String line) {
-        return line + CARRIAGE_LINE_FEED.value;
+        return line + CRLF.value;
     }
 }

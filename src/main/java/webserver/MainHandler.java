@@ -44,9 +44,9 @@ public class MainHandler implements Runnable {
     }
 
     private void writeResponseMessage(final DataOutputStream dos, final Response response) throws IOException {
-        final byte[] bodyDatas = response.getBody();
+        final byte[] bodyData = response.getBody();
         dos.writeBytes(response.getHeader());
-        dos.write(bodyDatas, 0, bodyDatas.length);
+        dos.write(bodyData, 0, bodyData.length);
         dos.flush();
     }
 }
