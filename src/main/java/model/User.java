@@ -3,14 +3,34 @@ package model;
 import java.util.Objects;
 
 public class User {
-    private String userId;
-    private String password;
-    private String name;
+    private final String userId;
+    private final String password;
+    private final String name;
 
-    public User(String userId, String password, String name) {
+    private User(String userId, String password, String name) {
         this.userId = userId;
         this.password = password;
         this.name = name;
+    }
+
+    static public class Builder {
+        private String userId;
+        private String password;
+        private String name;
+
+        public Builder(String userId, String password) {
+            this.userId = userId;
+            this.password = password;
+        }
+
+        public Builder name(String name) {
+            this.name = name;
+            return this;
+        }
+
+        public User build() {
+            return new User(userId, password, name);
+        }
     }
 
     public String getUserId() {
