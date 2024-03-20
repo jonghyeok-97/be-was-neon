@@ -21,11 +21,14 @@ public enum MIME {
         this.subType = subType;
     }
 
-    public static String findSubType(final String type) {
+    static MIME find(final String type) {
         return Stream.of(values())
                 .filter(mime -> mime.type.equals(type))
-                .map(mime -> mime.subType)
                 .findFirst()
-                .orElse(NONE.subType);
+                .orElse(NONE);
+    }
+
+    String getSubType() {
+        return subType;
     }
 }

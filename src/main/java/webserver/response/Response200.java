@@ -11,17 +11,18 @@ import java.io.IOException;
 import static webserver.HttpStandard.addNewLine;
 
 public class Response200 implements Response {
+    private static final Logger logger = LoggerFactory.getLogger(Response200.class);
+
     private enum StatusLine {
         OK("HTTP/1.1 200 OK");
 
-        private final String line;
+        final String line;
 
         StatusLine(final String _line) {
             line = _line;
         }
     }
 
-    private final Logger logger = LoggerFactory.getLogger(Response200.class);
     private final File file;
     private final byte[] datas;
 
@@ -56,7 +57,7 @@ public class Response200 implements Response {
 
     private String findSubType() {
         final String path = file.getPath();
-        final String mime = path.substring(path.lastIndexOf('.'));
-        return MIME.findSubType(mime);
+        final String type = path.substring(path.lastIndexOf('.'));
+        return MIME.find(type).getSubType();
     }
 }
