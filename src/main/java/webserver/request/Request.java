@@ -1,5 +1,6 @@
 package webserver.request;
 
+import model.UserInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import webserver.response.Response;
@@ -71,11 +72,28 @@ public class Request {
     }
 
     public Response respond() throws IOException {
-        optBody.ifPresent(RequestBody::addUserToDB);
+        //optBody.ifPresent(RequestBody::addUserToDB);
         final Optional<File> optFile = line.findFile();
         if (optFile.isPresent()) {
             return new Response200(optFile.get());
         }
         return new Response300();
+    }
+
+    public Optional<String> get(final UserInfo userInfo) {
+        // userInfo 가 null 이 아니면 flatMap 실행
+        return Optional.ofNullable(userInfo)
+                // optBody가 null 이 아니면 body.findValueBy(info) 실행
+                .flatMap(info ->
+                        optBody.flatMap(body -> body.findValueFrom(info))
+                );
+    }
+
+    public boolean isLogin() {
+        return line.isLogin();
+    }
+
+    public boolean isRegister() {
+        return line.isRegister();
     }
 }
