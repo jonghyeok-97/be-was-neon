@@ -1,4 +1,4 @@
-package webserver.request.line;
+package webserver.request;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -8,17 +8,18 @@ import java.util.Optional;
 import java.util.regex.PatternSyntaxException;
 
 public class RequestLine {
+    private static final Logger logger = LoggerFactory.getLogger(RequestLine.class);
+
     private static final int METHOD_POSITION = 0;
     private static final int URI_POSITION = 1;
     private static final String REQUESTLINE_PARSOR = " ";
 
-    private final Logger logger = LoggerFactory.getLogger(RequestLine.class);
     private final Method method;
     private final Uri uri;
 
     // Method 는 requestLine에서 의 Method가 GET, POST인지 유효성 검증역할.
-    public RequestLine(final String requestLine) {
-        logger.debug("RequestLine:{}", requestLine);
+    RequestLine(final String requestLine) {
+        logger.debug("리퀘스트 라인 : {}", requestLine);
         try {
             final String[] splited = requestLine.split(REQUESTLINE_PARSOR);
             method = new Method(splited[METHOD_POSITION]);
@@ -29,11 +30,19 @@ public class RequestLine {
         }
     }
 
-    public boolean isPOST() {
+    boolean isPOST() {
         return method.isPOST();
     }
 
-    public Optional<File> findFile() {
+    boolean isLogin() {
+        return uri.isLogin() && isPOST();
+    }
+
+    boolean isRegister() {
+        return uri.isRegister() && isPOST();
+    }
+
+    Optional<File> findFile() {
         if (method.isPOST()) {
             return Optional.empty();
         }

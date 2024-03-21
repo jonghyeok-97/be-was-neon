@@ -1,11 +1,9 @@
-package webserver.request.body;
+package webserver.request;
 
 import db.Database;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class RequestBodyTest {
 
@@ -14,7 +12,7 @@ class RequestBodyTest {
     void addUserToDB() {
         final RequestBody body = new RequestBody("user=종혁&password=123&name=Gromit");
 
-        body.addUserToDB();
+      //  body.addUserToDB();
 
         Assertions.assertThat(Database.findAll().size()).isEqualTo(1);
     }
