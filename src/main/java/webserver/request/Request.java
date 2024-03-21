@@ -1,12 +1,11 @@
 package webserver.request;
 
-import static webserver.HttpStandard.CRLF;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import webserver.response.Response;
 import webserver.response.Response200;
 import webserver.response.Response300;
+import webserver.utils.CRLF;
 
 import java.io.File;
 import java.io.IOException;
@@ -26,8 +25,8 @@ public class Request {
     // inner class는 Request를 만들 때만 사용하기 때문에 private 지정
     public Request(final String requestMessage) {
         logger.debug("들어온 메시지 : {}", requestMessage);
-        final RequestFactory factory = new RequestFactory(requestMessage);
         try {
+            final RequestFactory factory = new RequestFactory(requestMessage);
             line = factory.createRequestLine();
             headers = factory.createHeader();
             optBody = factory.createOptRequestBody();
@@ -41,7 +40,7 @@ public class Request {
         final List<String> messages;
 
         RequestFactory(final String requestMessage) {
-            messages = Stream.of(requestMessage.split(CRLF.getValue()))
+            messages = Stream.of(CRLF.split(requestMessage))
                     .collect(Collectors.toList());
         }
 
