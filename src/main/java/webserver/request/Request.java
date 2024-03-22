@@ -68,13 +68,8 @@ public class Request {
         }
     }
 
-    public Response respond() throws IOException {
-        //optBody.ifPresent(RequestBody::addUserToDB);
-        final Optional<File> optFile = line.findFile();
-        if (optFile.isPresent()) {
-            return new Response200(optFile.get());
-        }
-        return new Response300();
+    public Optional<File> findFile() {
+        return line.findFile();
     }
 
     public Optional<String> get(final UserInfo userInfo) {

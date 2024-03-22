@@ -40,16 +40,9 @@ public class User {
         return userId;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public boolean isSame(final User other) {
-        return Objects.equals(userId, other.userId) && Objects.equals(password, other.password);
+    public boolean has(final String password) {
+        Objects.requireNonNull(password, "password는 null이 될 수 없습니다");
+        return Objects.equals(this.password, password);
     }
 
     @Override
