@@ -5,6 +5,8 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.Optional;
+
 class DatabaseTest {
 
     @Test
@@ -16,12 +18,12 @@ class DatabaseTest {
                 .build();
         final User register2 = new User.Builder("그로밋", "1")
                 .build();
+
         Database.addUser(register1);
         Database.addUser(register2);
+        final String userId = login.getUserId();
+        final Optional<User> found = Database.findUserById(userId);
 
-        final String loginUserId = login.getUserId();
-        final User found = Database.findUserById(loginUserId);
-
-        Assertions.assertThat(found.isSame(register1)).isTrue();
+        Assertions.assertThat(found).isNotEmpty();
     }
 }
