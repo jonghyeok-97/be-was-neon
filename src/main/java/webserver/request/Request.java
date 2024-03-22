@@ -3,13 +3,9 @@ package webserver.request;
 import model.UserInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import webserver.response.Response;
-import webserver.response.Response200;
-import webserver.response.Response300;
 import webserver.utils.CRLF;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -37,6 +33,7 @@ public class Request {
         }
     }
 
+    // inner class로 만든 메소들 테스트 어떻게..?
     private class RequestFactory {
         final List<String> messages;
 
@@ -81,9 +78,9 @@ public class Request {
     }
 
     public Optional<String> get(final UserInfo userInfo) {
-        // userInfo 가 null 이 아니면 flatMap 실행
+        // ofNullable 구문  :  userInfo 가 null 이 아니면 flatMap 실행
+        // flatMap 구문   :   optBody가 null 이 아니면 body.findValueBy(info) 실행
         return Optional.ofNullable(userInfo)
-                // optBody가 null 이 아니면 body.findValueBy(info) 실행
                 .flatMap(info ->
                         optBody.flatMap(body -> body.findValueFrom(info))
                 );

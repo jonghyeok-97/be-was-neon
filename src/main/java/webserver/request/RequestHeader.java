@@ -28,6 +28,7 @@ public class RequestHeader {
             final String[] splited = message.split(":");
             String type = splited[0].trim();
             String value = splited[1].trim();
+            logger.debug("헤더 타입 : 값 -> {} : {}", type, value);
             _headers.put(type, value);
         });
         return _headers;

@@ -25,8 +25,9 @@ public class RequestBody {
         }
     }
 
-    Optional<String> findValueFrom(final UserInfo userInfo) {
-        return Optional.ofNullable(userInfo)
+    // Optional.ofNullable vs Objects.requireNotNull -> Optional을 반환하고 싶을 때, Objects -> 매개변수가 null인지 확인할때.
+    Optional<String> findValueFrom(final UserInfo info) {
+        return Optional.ofNullable(info)
                 .map(userInfoMap::get);
     }
 

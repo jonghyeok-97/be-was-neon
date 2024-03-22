@@ -42,6 +42,7 @@ public class RequestLine {
         return uri.isRegister() && isPOST();
     }
 
+    // GET 요청일 때만, 허락
     Optional<File> findFile() {
         if (method.isPOST()) {
             return Optional.empty();
