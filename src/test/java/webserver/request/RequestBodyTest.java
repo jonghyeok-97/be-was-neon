@@ -1,6 +1,5 @@
 package webserver.request;
 
-import db.Database;
 import model.UserInfo;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -15,9 +14,9 @@ class RequestBodyTest {
     void addUserToDB() {
         final RequestBody body = new RequestBody("userId=jonghyeok&password=123&name=Gromit");
 
-        final Optional<String> optUserId = body.findValueFrom(UserInfo.USER_ID);
-        final Optional<String> optPassword = body.findValueFrom(UserInfo.PASSWORD);
-        final Optional<String> optName = body.findValueFrom(UserInfo.NICKNAME);
+        final Optional<String> optUserId = body.get(UserInfo.USER_ID);
+        final Optional<String> optPassword = body.get(UserInfo.PASSWORD);
+        final Optional<String> optName = body.get(UserInfo.NICKNAME);
 
         Assertions.assertThat(optUserId).isNotEmpty();
         Assertions.assertThat(optPassword).isNotEmpty();

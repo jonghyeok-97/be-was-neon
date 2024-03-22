@@ -18,7 +18,7 @@ public class RequestBody {
     RequestBody(final String body) {
         try {
             final String[] querys = getQuerys(body);
-            userInfoMap = getUserInfo(querys);
+            userInfoMap = get(querys);
         } catch (PatternSyntaxException e) {
             logger.error(e.getMessage());
             throw new IllegalArgumentException("404에러");
@@ -26,7 +26,7 @@ public class RequestBody {
     }
 
     // Optional.ofNullable vs Objects.requireNotNull -> Optional을 반환하고 싶을 때, Objects -> 매개변수가 null인지 확인할때.
-    Optional<String> findValueFrom(final UserInfo info) {
+    Optional<String> get(final UserInfo info) {
         return Optional.ofNullable(info)
                 .map(userInfoMap::get);
     }
@@ -35,7 +35,7 @@ public class RequestBody {
         return queryParmas.split("&");
     }
 
-    private Map<UserInfo, String> getUserInfo(final String[] querys) {
+    private Map<UserInfo, String> get(final String[] querys) {
         final Map<UserInfo, String> _userInfo = new HashMap<>();
         Arrays.stream(querys)
                 .forEach(query -> {

@@ -6,7 +6,6 @@ import webserver.response.Response;
 import java.io.IOException;
 
 public class RequestHandler {
-   // private final Map<Predicate<Request>, Handler> handlerMap;
     private final Request request;
 
     public RequestHandler(final Request request) {

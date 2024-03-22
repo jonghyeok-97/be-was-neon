@@ -77,7 +77,7 @@ public class Request {
         // flatMap 구문   :   optBody가 null 이 아니면 body.findValueBy(info) 실행
         return Optional.ofNullable(userInfo)
                 .flatMap(info ->
-                        optBody.flatMap(body -> body.findValueFrom(info))
+                        optBody.flatMap(body -> body.get(info))
                 );
     }
 
