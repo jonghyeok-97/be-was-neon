@@ -2,6 +2,7 @@ package webserver.handler;
 
 import webserver.request.Request;
 import webserver.response.Response;
+import webserver.utils.PostRequestPath;
 
 import java.io.IOException;
 
@@ -13,10 +14,10 @@ public class RequestHandler {
     }
 
     public Response handle() throws IOException {
-        if (request.isLogin()) {
+        if (request.has(PostRequestPath.LOGIN)) {
             return new PostHandler(request).login();
         }
-        if (request.isRegister()) {
+        if (request.has(PostRequestPath.REGISTER)) {
             return new PostHandler(request).registerUser();
         }
         return new GetHandler(request).handle();

@@ -4,9 +4,11 @@ import model.UserInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import webserver.utils.CRLF;
+import webserver.utils.PostRequestPath;
 
 import java.io.File;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.regex.PatternSyntaxException;
 import java.util.stream.Collectors;
@@ -82,11 +84,8 @@ public class Request {
                 );
     }
 
-    public boolean isLogin() {
-        return line.isLogin();
-    }
-
-    public boolean isRegister() {
-        return line.isRegister();
+    public boolean has(final PostRequestPath path) {
+        Objects.requireNonNull(path, path + "는 null이 될 수 없습니다.");
+        return line.has(path);
     }
 }

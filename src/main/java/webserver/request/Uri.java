@@ -2,12 +2,13 @@ package webserver.request;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import webserver.utils.FilePath;
+import webserver.utils.PostRequestPath;
 
 import java.io.File;
 
 public class Uri {
     private static final Logger logger = LoggerFactory.getLogger(Uri.class);
-    private static final String RESOURCES_BASE_PATH = "src/main/resources/static";
 
     private final String uri;
 
@@ -17,16 +18,12 @@ public class Uri {
         validate(uri);
     }
 
-    boolean isLogin() {
-        return uri.contains("login");
-    }
-
-    boolean isRegister() {
-        return uri.contains("create");
+    boolean isSame(final PostRequestPath path) {
+        return path.getPath().equals(uri);
     }
 
     File findFile() {
-        return new File(RESOURCES_BASE_PATH + uri);
+        return new File(FilePath.BASE.getPath() + uri);
     }
 
     private void validate(final String uri) {

@@ -2,10 +2,10 @@ package webserver.request;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import webserver.utils.PostRequestPath;
 
 import java.io.File;
 import java.util.Optional;
-import java.util.regex.PatternSyntaxException;
 
 public class RequestLine {
     private static final Logger logger = LoggerFactory.getLogger(RequestLine.class);
@@ -29,12 +29,8 @@ public class RequestLine {
         return method.isPOST();
     }
 
-    boolean isLogin() {
-        return uri.isLogin() && isPOST();
-    }
-
-    boolean isRegister() {
-        return uri.isRegister() && isPOST();
+    boolean has(final PostRequestPath path) {
+        return isPOST() && uri.isSame(path);
     }
 
     // GET 요청일 때만, 허락
