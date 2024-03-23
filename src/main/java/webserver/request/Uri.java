@@ -22,13 +22,19 @@ public class Uri {
         return path.getPath().equals(uri);
     }
 
+    String getUri() {
+        return uri;
+    }
+
     File findFile() {
         return new File(FilePath.BASE.getPath() + uri);
     }
 
     private void validate(final String uri) {
-        if (!uri.contains(".") && !PostRequestPath.has(uri)) {
+        final File file = new File(FilePath.BASE.getPath() + uri);
+        if (!file.exists() && !PostRequestPath.has(uri)) {
             throw new IllegalArgumentException("404에러");
         }
+
     }
 }
