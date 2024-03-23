@@ -2,7 +2,7 @@ package webserver.handler;
 
 import webserver.request.Request;
 import webserver.response.Response;
-import webserver.utils.PostRequestPath;
+import webserver.path.PostRequestPath;
 
 import java.io.IOException;
 
@@ -20,6 +20,9 @@ public class RequestHandler {
         if (request.has(PostRequestPath.REGISTER)) {
             return new PostHandler(request).registerUser();
         }
-        return new GetHandler(request).handle();
+        if (request.isGetRequest()) {
+            return new GetHandler(request.getUri().get()).handle();
+        }
+        throw new IllegalArgumentException("404에러");
     }
 }

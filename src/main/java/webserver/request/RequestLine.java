@@ -2,7 +2,7 @@ package webserver.request;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import webserver.utils.PostRequestPath;
+import webserver.path.PostRequestPath;
 
 import java.util.Optional;
 
@@ -26,6 +26,10 @@ public class RequestLine {
 
     boolean isPOST() {
         return method.isPOST();
+    }
+
+    boolean isGet() {
+        return method.isGet();
     }
 
     boolean has(final PostRequestPath path) {

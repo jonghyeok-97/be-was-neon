@@ -8,15 +8,14 @@ import java.io.IOException;
 import java.util.Optional;
 
 public class GetHandler implements Handler {
-    private final Request request;
+    private final String uri;
 
-    GetHandler(final Request request) {
-        this.request = request;
+    GetHandler(final String uri) {
+        this.uri = uri;
     }
 
     public Response handle() throws IOException {
-        final Optional<String> optUri = request.getUri();
-        final FileHandler fileHandler = FileHandler.createFileHandler(optUri.get());
+        final FileHandler fileHandler = FileHandler.createFileHandler(uri);
         final String subTypeOfMIME = fileHandler.findSubTypeOfMIME();
         final byte[] fileData = fileHandler.read();
 

@@ -19,6 +19,10 @@ public class Method {
         return type == Type.POST;
     }
 
+    boolean isGet() {
+        return type == Type.GET;
+    }
+
     private enum Type {
         GET, POST;
 
