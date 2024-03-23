@@ -15,7 +15,7 @@ class UriTest {
     }
 
     @Test
-    @DisplayName("URI에 해당하는 파일 이름이 없으면 URI 객체는 생성된다.")
+    @DisplayName("URI에 해당하는 파일 이름이 없으면 URI 객체는 생성되지 않는다.")
     void noCreateURI() {
         Assertions.assertThatThrownBy(() -> new Uri("/faviicon.ico"))
                 .isInstanceOf(IllegalArgumentException.class);
