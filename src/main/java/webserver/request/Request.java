@@ -71,8 +71,8 @@ public class Request {
         }
     }
 
-    public Optional<File> findFile() {
-        return line.findFile();
+    public Optional<String> getUri() {
+        return line.getUri();
     }
 
     public Optional<String> get(final UserInfo userInfo) {

@@ -34,10 +34,10 @@ public class RequestLine {
     }
 
     // GET 요청일 때만, 허락
-    Optional<File> findFile() {
+    Optional<String> getUri() {
         if (method.isPOST()) {
             return Optional.empty();
         }
-        return Optional.of(uri.findFile());
+        return Optional.of(uri.getUri());
     }
 }

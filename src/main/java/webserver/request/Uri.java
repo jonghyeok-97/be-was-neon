@@ -2,10 +2,8 @@ package webserver.request;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import webserver.utils.FilePath;
+import webserver.handler.FileHandler;
 import webserver.utils.PostRequestPath;
-
-import java.io.File;
 
 public class Uri {
     private static final Logger logger = LoggerFactory.getLogger(Uri.class);
@@ -26,13 +24,8 @@ public class Uri {
         return uri;
     }
 
-    File findFile() {
-        return new File(FilePath.BASE.getPath() + uri);
-    }
-
     private void validate(final String uri) {
-        final File file = new File(FilePath.BASE.getPath() + uri);
-        if (!file.exists() && !PostRequestPath.has(uri)) {
+        if (!FileHandler.isExistFile(uri) && !PostRequestPath.has(uri)) {
             throw new IllegalArgumentException("404에러");
         }
     }
