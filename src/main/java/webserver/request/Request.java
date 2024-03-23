@@ -6,7 +6,6 @@ import org.slf4j.LoggerFactory;
 import webserver.utils.CRLF;
 import webserver.utils.PostRequestPath;
 
-import java.io.File;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -71,6 +70,7 @@ public class Request {
         }
     }
 
+    // line 이 GET이면 URI를 획득, POST면 URI를 획득하지 못함.
     public Optional<String> getUri() {
         return line.getUri();
     }

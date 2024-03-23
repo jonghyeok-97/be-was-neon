@@ -4,7 +4,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import webserver.utils.PostRequestPath;
 
-import java.io.File;
 import java.util.Optional;
 
 public class RequestLine {

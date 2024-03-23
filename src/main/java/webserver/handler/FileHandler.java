@@ -1,12 +1,12 @@
 package webserver.handler;
 
+import webserver.response.MIME;
 import webserver.utils.FilePath;
 
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.Objects;
 
 public class FileHandler {
     private final File file;
@@ -32,8 +32,9 @@ public class FileHandler {
         return fileDatas;
     }
 
-    public String findFileType() {
+    public String findSubTypeOfMIME() {
         final int extensionPosition = file.getName().lastIndexOf(".");
-        return file.getName().substring(extensionPosition);
+        final String fileType = file.getName().substring(extensionPosition);
+        return MIME.find(fileType).getSubType();
     }
 }
