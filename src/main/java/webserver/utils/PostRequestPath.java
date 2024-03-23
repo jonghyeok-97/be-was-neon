@@ -1,5 +1,7 @@
 package webserver.utils;
 
+import java.util.stream.Stream;
+
 public enum PostRequestPath {
     LOGIN("/login"),
     REGISTER("/create");
@@ -12,5 +14,10 @@ public enum PostRequestPath {
 
     public String getPath() {
         return path;
+    }
+
+    public static boolean has(final String uri) {
+        return Stream.of(values())
+                .anyMatch(postPath -> postPath.path.equals(uri));
     }
 }

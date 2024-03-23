@@ -27,7 +27,7 @@ public class Uri {
     }
 
     private void validate(final String uri) {
-        if (!uri.contains(".") && !uri.contains("create") && !uri.contains("login")) {
+        if (!uri.contains(".") && !PostRequestPath.has(uri)) {
             throw new IllegalArgumentException("404에러");
         }
     }
