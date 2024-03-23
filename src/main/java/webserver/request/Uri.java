@@ -24,6 +24,7 @@ public class Uri {
         return uri;
     }
 
+    // URI에 해당하는 파일도 존재하지 않고, POST에 해당하는 URI도 아니라면 404에러
     private void validate(final String uri) {
         if (!FileHandler.isExistFile(uri) && !PostHandler.Path.has(uri)) {
             throw new IllegalArgumentException("404에러");

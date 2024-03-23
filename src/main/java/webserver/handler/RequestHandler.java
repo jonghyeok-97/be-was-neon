@@ -19,6 +19,7 @@ public class RequestHandler {
         if (request.has(PostHandler.Path.REGISTER)) {
             return new PostHandler(request).registerUser();
         }
+        // GET요청일 때만 URI를 받아서 요청을 처리하는데, 너무 구체적으로 로직인 것 같다. 어떻게 추상화 시켜야 하지.,.
         if (request.isGetRequest()) {
             return new GetHandler(request.getUri().get()).handle();
         }
