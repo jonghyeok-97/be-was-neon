@@ -10,8 +10,7 @@ public enum MIME {
     ICO(".ico", "image/x-icon"),
     PNG(".png", "image/png"),
     JPG(".jpg", "image/jpg"),
-    JPEG(".jpeg", "image/jpeg"),
-    NONE("", "");
+    JPEG(".jpeg", "image/jpeg");
 
     private final String type;
     private final String subType;
@@ -25,7 +24,7 @@ public enum MIME {
         return Stream.of(values())
                 .filter(mime -> mime.type.equals(type))
                 .findFirst()
-                .orElse(NONE);
+                .orElseThrow(() -> new IllegalArgumentException("404에러"));
     }
 
     public String getSubType() {
