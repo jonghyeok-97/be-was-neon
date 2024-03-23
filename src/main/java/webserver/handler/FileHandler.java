@@ -1,7 +1,7 @@
 package webserver.handler;
 
 import webserver.utils.MIME;
-import webserver.path.FilePath;
+import webserver.path.BasicPath;
 
 import java.io.BufferedInputStream;
 import java.io.File;
@@ -16,12 +16,12 @@ public class FileHandler {
     }
 
     public static boolean isExistFile(final String uri) {
-        final File file = new File(FilePath.BASE.getPath() + uri);
+        final File file = new File(BasicPath.BASE.getPath() + uri);
         return file.exists();
     }
 
     public static FileHandler createFileHandler(final String uri) {
-        return new FileHandler(new File(FilePath.BASE.getPath() + uri));
+        return new FileHandler(new File(BasicPath.BASE.getPath() + uri));
     }
 
     public byte[] read() throws IOException {

@@ -40,7 +40,7 @@ public class User {
         return userId;
     }
 
-    public boolean has(final String password) {
+    public boolean hasPassword(final String password) {
         Objects.requireNonNull(password, "password는 null이 될 수 없습니다");
         return Objects.equals(this.password, password);
     }

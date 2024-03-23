@@ -3,8 +3,8 @@ package webserver.request;
 import model.UserInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import webserver.handler.PostHandler;
 import webserver.utils.CRLF;
-import webserver.path.PostRequestPath;
 
 import java.util.List;
 import java.util.Objects;
@@ -88,7 +88,7 @@ public class Request {
                 );
     }
 
-    public boolean has(final PostRequestPath path) {
+    public boolean has(final PostHandler.Path path) {
         Objects.requireNonNull(path, path + "는 null이 될 수 없습니다.");
         return line.has(path);
     }

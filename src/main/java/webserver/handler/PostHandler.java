@@ -4,13 +4,36 @@ import db.Database;
 import model.Session;
 import model.User;
 import model.UserInfo;
+import webserver.path.BasicPath;
 import webserver.request.Request;
 import webserver.response.Response;
 import webserver.response.StatusLine;
 
 import java.util.Optional;
+import java.util.stream.Stream;
 
 public class PostHandler implements Handler{
+
+    public enum Path {
+        LOGIN("/login"),
+        REGISTER("/create");
+
+        private final String path;
+
+        Path(final String path) {
+            this.path = path;
+        }
+
+        public String getPath() {
+            return path;
+        }
+
+        public static boolean has(final String uri) {
+            return Stream.of(values())
+                    .anyMatch(postPath -> postPath.path.equals(uri));
+        }
+    }
+
     private final Request request;
 
     PostHandler(final Request request) {
@@ -28,7 +51,7 @@ public class PostHandler implements Handler{
                 .build();
         Database.addUser(user);
         return new Response.Builder(StatusLine.Found.getValue())
-                .location("/index.html")
+                .location(BasicPath.HOME.getPath())
                 .build();
     }
 
@@ -38,14 +61,14 @@ public class PostHandler implements Handler{
         final Optional<String> optPassword = request.get(UserInfo.PASSWORD);
         final Optional<User> optUser = Database.findUserById(optId.get());
 
-        return optUser.filter(user -> user.has(optPassword.get()))
+        return optUser.filter(user -> user.hasPassword(optPassword.get()))
                 .map(user -> {
                     final String sessionId = Session.createSessionID();
                     Session.add(sessionId, user);
                     return new Response.Builder(StatusLine.Found.getValue())
-                            .location("/index.html")
+                            .location(BasicPath.HOME.getPath())
                             .cookie(sessionId)
                             .build();
-                }).orElse(new Response.Builder(StatusLine.Found.getValue()).build());
+                }).orElseThrow(() -> new IllegalArgumentException("404에러. 로그인 불가"));
     }
 }
