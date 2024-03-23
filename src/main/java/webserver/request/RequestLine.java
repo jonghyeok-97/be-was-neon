@@ -20,14 +20,9 @@ public class RequestLine {
     // Method 는 requestLine에서 의 Method가 GET, POST인지 유효성 검증역할.
     RequestLine(final String requestLine) {
         logger.debug("리퀘스트 라인 : {}", requestLine);
-        try {
-            final String[] splited = requestLine.split(REQUESTLINE_PARSOR);
-            method = new Method(splited[METHOD_POSITION]);
-            uri = new Uri(splited[URI_POSITION]);
-        } catch (PatternSyntaxException e) {
-            logger.error(e.getMessage());
-            throw new IllegalArgumentException("404에러");
-        }
+        final String[] splited = requestLine.split(REQUESTLINE_PARSOR);
+        method = new Method(splited[METHOD_POSITION]);
+        uri = new Uri(splited[URI_POSITION]);
     }
 
     boolean isPOST() {

@@ -16,13 +16,8 @@ public class RequestBody {
     private final Map<UserInfo, String> userInfoMap;
 
     RequestBody(final String body) {
-        try {
-            final String[] querys = getQuerys(body);
-            userInfoMap = get(querys);
-        } catch (PatternSyntaxException e) {
-            logger.error(e.getMessage());
-            throw new IllegalArgumentException("404에러");
-        }
+        final String[] querys = getQuerys(body);
+        userInfoMap = get(querys);
     }
 
     // Optional.ofNullable vs Objects.requireNotNull -> Optional을 반환하고 싶을 때, Objects -> 매개변수가 null인지 확인할때.

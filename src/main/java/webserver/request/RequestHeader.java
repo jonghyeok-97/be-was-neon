@@ -14,12 +14,7 @@ public class RequestHeader {
     private final Map<String, String> headers;
 
     RequestHeader(final List<String> messages) {
-        try {
-            headers = parseTypeAndValue(messages);
-        } catch (PatternSyntaxException e) {
-            logger.error(e.getMessage());
-            throw new IllegalArgumentException("404에러");
-        }
+        headers = parseTypeAndValue(messages);
     }
 
     private Map<String, String> parseTypeAndValue(final List<String> messages) {

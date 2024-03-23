@@ -8,6 +8,7 @@ import webserver.utils.CRLF;
 import java.io.File;
 import java.util.List;
 import java.util.Optional;
+import java.util.regex.PatternSyntaxException;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -27,7 +28,7 @@ public class Request {
             line = factory.createRequestLine();
             headers = factory.createHeader();
             optBody = factory.createOptRequestBody();
-        } catch (IndexOutOfBoundsException e) {
+        } catch (IndexOutOfBoundsException | PatternSyntaxException e) {
             logger.error(e.getMessage());
             throw new IllegalArgumentException("404에러");
         }
