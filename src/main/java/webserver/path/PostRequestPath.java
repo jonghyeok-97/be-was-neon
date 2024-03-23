@@ -1,4 +1,4 @@
-package webserver.utils;
+package webserver.path;
 
 import java.util.stream.Stream;
 

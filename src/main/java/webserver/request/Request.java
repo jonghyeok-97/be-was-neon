@@ -4,7 +4,7 @@ import model.UserInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import webserver.utils.CRLF;
-import webserver.utils.PostRequestPath;
+import webserver.path.PostRequestPath;
 
 import java.util.List;
 import java.util.Objects;

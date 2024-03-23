@@ -3,7 +3,7 @@ package webserver.request;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import webserver.handler.FileHandler;
-import webserver.utils.PostRequestPath;
+import webserver.path.PostRequestPath;
 
 public class Uri {
     private static final Logger logger = LoggerFactory.getLogger(Uri.class);

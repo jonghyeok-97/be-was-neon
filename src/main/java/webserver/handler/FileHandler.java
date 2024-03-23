@@ -1,7 +1,7 @@
 package webserver.handler;
 
-import webserver.response.MIME;
-import webserver.utils.FilePath;
+import webserver.utils.MIME;
+import webserver.path.FilePath;
 
 import java.io.BufferedInputStream;
 import java.io.File;

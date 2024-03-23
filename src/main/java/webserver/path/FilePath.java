@@ -1,4 +1,4 @@
-package webserver.utils;
+package webserver.path;
 
 public enum FilePath {
     BASE("src/main/resources/static"),

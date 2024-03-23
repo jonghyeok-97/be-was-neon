@@ -1,4 +1,4 @@
-package webserver.response;
+package webserver.utils;
 
 import java.util.stream.Stream;
 

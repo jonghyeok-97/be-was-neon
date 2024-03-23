@@ -3,6 +3,7 @@ package webserver.response;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import webserver.utils.MIME;
 
 class MIMETest {
 
