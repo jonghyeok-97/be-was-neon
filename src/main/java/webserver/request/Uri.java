@@ -35,6 +35,5 @@ public class Uri {
         if (!file.exists() && !PostRequestPath.has(uri)) {
             throw new IllegalArgumentException("404에러");
         }
-
     }
 }
