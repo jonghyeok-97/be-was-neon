@@ -1,11 +1,9 @@
 package webserver.handler;
 
-import webserver.request.Request;
 import webserver.response.Response;
-import webserver.response.StatusLine;
+import webserver.response.StartLine;
 
 import java.io.IOException;
-import java.util.Optional;
 
 public class GetHandler implements Handler {
     private final String uri;
@@ -19,7 +17,7 @@ public class GetHandler implements Handler {
         final String subTypeOfMIME = fileHandler.findSubTypeOfMIME();
         final byte[] fileData = fileHandler.read();
 
-        return new Response.Builder(StatusLine.OK.getValue())
+        return new Response.Builder(StartLine.OK_200)
                 .contentType(subTypeOfMIME)
                 .contentLength(fileData)
                 .build();
