@@ -1,12 +1,12 @@
 package webserver.response;
 
-public enum StartLine {
+public enum StatusLine {
     OK_200("HTTP/1.1 200 OK "),
     Found_302("HTTP/1.1 302 Found ");
 
     private final String line;
 
-    StartLine(final String _line) {
+    StatusLine(final String _line) {
         line = _line;
     }
 

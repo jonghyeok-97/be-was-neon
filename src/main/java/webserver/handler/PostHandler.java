@@ -7,7 +7,7 @@ import model.UserInfo;
 import webserver.path.BasicPath;
 import webserver.request.Request;
 import webserver.response.Response;
-import webserver.response.StartLine;
+import webserver.response.StatusLine;
 
 import java.util.Optional;
 import java.util.stream.Stream;
@@ -50,7 +50,7 @@ public class PostHandler implements Handler{
                 .name(optName.get())
                 .build();
         Database.addUser(user);
-        return new Response.Builder(StartLine.Found_302)
+        return new Response.Builder(StatusLine.Found_302)
                 .location(BasicPath.HOME.getPath())
                 .build();
     }
@@ -65,7 +65,7 @@ public class PostHandler implements Handler{
                 .map(user -> {
                     final String sessionId = Session.createSessionID();
                     Session.add(sessionId, user);
-                    return new Response.Builder(StartLine.Found_302)
+                    return new Response.Builder(StatusLine.Found_302)
                             .location(BasicPath.HOME.getPath())
                             .cookie(sessionId)
                             .build();

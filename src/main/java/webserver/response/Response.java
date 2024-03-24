@@ -3,23 +3,23 @@ package webserver.response;
 import webserver.utils.CRLF;
 
 public class Response {
-    private final StartLine startLine;
+    private final StatusLine statusLine;
     private final StringBuilder headers;
     private final byte[] body;
 
-    private Response(final StartLine startLine, final StringBuilder headers, final byte[] body) {
-        this.startLine = startLine;
+    private Response(final StatusLine statusLine, final StringBuilder headers, final byte[] body) {
+        this.statusLine = statusLine;
         this.headers = headers;
         this.body = body;
     }
 
     static public class Builder {
-        private StartLine startLine;
+        private StatusLine statusLine;
         private StringBuilder headers = new StringBuilder();
         private byte[] body;
 
-        public Builder(final StartLine startLine) {
-            this.startLine = startLine;
+        public Builder(final StatusLine statusLine) {
+            this.statusLine = statusLine;
         }
 
         public Builder contentType(final String contentType) {
@@ -44,12 +44,12 @@ public class Response {
         }
 
         public Response build() {
-            return new Response(startLine, headers, body);
+            return new Response(statusLine, headers, body);
         }
     }
 
-    public String getStartLine() {
-        return CRLF.addNewLine(startLine.getValue());
+    public String getStatusLine() {
+        return CRLF.addNewLine(statusLine.getValue());
     }
 
     public String getHeader() {

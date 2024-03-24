@@ -46,7 +46,7 @@ public class MainHandler implements Runnable {
     }
 
     private void writeResponseMessage(final DataOutputStream dos, final Response response) throws IOException {
-        dos.writeBytes(response.getStartLine());
+        dos.writeBytes(response.getStatusLine());
         dos.writeBytes(response.getHeader());
         dos.writeBytes(response.getEmptyLine());
         dos.write(response.getBody(), 0, response.getBody().length);
