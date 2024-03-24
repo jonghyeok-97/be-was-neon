@@ -53,7 +53,7 @@ public class Response {
     }
 
     public String getHeader() {
-        return CRLF.addNewLine(headers.toString());
+        return headers.toString();
     }
 
     public String getEmptyLine() {
