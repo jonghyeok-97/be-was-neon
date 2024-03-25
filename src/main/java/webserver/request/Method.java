@@ -1,4 +1,4 @@
-package webserver.request.line;
+package webserver.request;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -6,19 +6,24 @@ import org.slf4j.LoggerFactory;
 import java.util.stream.Stream;
 
 public class Method {
-    private final Logger logger = LoggerFactory.getLogger(Method.class);
+    private static final Logger logger = LoggerFactory.getLogger(Method.class);
+
     private final Type type;
 
-    public Method(final String method) {
-        logger.debug("METHOD : {}", method);
+    Method(final String method) {
+        logger.debug("메소드 : {}", method);
         type = Type.match(method);
     }
 
-    public boolean isPOST() {
+    boolean isPOST() {
         return type == Type.POST;
     }
 
-    private enum Type {
+    boolean isGet() {
+        return type == Type.GET;
+    }
+
+    public enum Type {
         GET, POST;
 
         private static Type match(final String method) {

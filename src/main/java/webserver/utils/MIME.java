@@ -1,4 +1,4 @@
-package webserver.response;
+package webserver.utils;
 
 import java.util.stream.Stream;
 
@@ -10,8 +10,7 @@ public enum MIME {
     ICO(".ico", "image/x-icon"),
     PNG(".png", "image/png"),
     JPG(".jpg", "image/jpg"),
-    JPEG(".jpeg", "image/jpeg"),
-    NONE("", "");
+    JPEG(".jpeg", "image/jpeg");
 
     private final String type;
     private final String subType;
@@ -21,11 +20,14 @@ public enum MIME {
         this.subType = subType;
     }
 
-    public static String findSubType(final String type) {
+    public static MIME find(final String type) {
         return Stream.of(values())
                 .filter(mime -> mime.type.equals(type))
-                .map(mime -> mime.subType)
                 .findFirst()
-                .orElse(NONE.subType);
+                .orElseThrow(() -> new IllegalArgumentException("404에러"));
+    }
+
+    public String getSubType() {
+        return subType;
     }
 }

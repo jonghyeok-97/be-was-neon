@@ -2,15 +2,12 @@ package webserver;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import webserver.handler.RequestHandler;
 import webserver.request.Request;
-import webserver.request.RequestFactory;
-import webserver.request.body.RequestBody;
-import webserver.request.line.RequestLine;
 import webserver.response.Response;
 
 import java.io.*;
 import java.net.Socket;
-import java.util.Optional;
 
 public class MainHandler implements Runnable {
     private static final Logger logger = LoggerFactory.getLogger(MainHandler.class);
@@ -27,10 +24,10 @@ public class MainHandler implements Runnable {
 
         try (InputStream in = connection.getInputStream(); OutputStream out = connection.getOutputStream()) {
             final String requestMessage = getRequestMessage(in);
-            final RequestFactory factory = new RequestFactory(requestMessage);
 
-            final Request request = createRequest(factory);
-            final Response response = request.respond();
+            final Request request = new Request(requestMessage);
+            final RequestHandler handler = new RequestHandler(request);
+            final Response response = handler.handle();
 
             final BufferedOutputStream bos = new BufferedOutputStream(out);
             final DataOutputStream dos = new DataOutputStream(bos);
@@ -48,16 +45,11 @@ public class MainHandler implements Runnable {
         return lines.toString();
     }
 
-    private Request createRequest(final RequestFactory factory) {
-        final RequestLine requestLine = factory.createRequestLine();
-        final Optional<RequestBody> optRequestBody = factory.createOptRequestBody(requestLine);
-        return new Request(requestLine, optRequestBody);
-    }
-
     private void writeResponseMessage(final DataOutputStream dos, final Response response) throws IOException {
-        final byte[] bodyDatas = response.getBody();
+        dos.writeBytes(response.getStatusLine());
         dos.writeBytes(response.getHeader());
-        dos.write(bodyDatas, 0, bodyDatas.length);
+        dos.writeBytes(response.getEmptyLine());
+        dos.write(response.getBody(), 0, response.getBody().length);
         dos.flush();
     }
 }
