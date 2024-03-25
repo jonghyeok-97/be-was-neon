@@ -3,6 +3,7 @@ package webserver.request;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import webserver.handler.PostHandler;
+import webserver.path.PostPath;
 
 import java.util.Optional;
 
@@ -32,7 +33,7 @@ public class RequestLine {
         return method.isGet();
     }
 
-    boolean has(final PostHandler.Path path) {
+    boolean has(final PostPath path) {
         return isPOST() && uri.isSame(path);
     }
 

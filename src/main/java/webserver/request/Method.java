@@ -23,7 +23,7 @@ public class Method {
         return type == Type.GET;
     }
 
-    private enum Type {
+    public enum Type {
         GET, POST;
 
         private static Type match(final String method) {

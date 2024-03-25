@@ -4,6 +4,7 @@ import model.UserInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import webserver.handler.PostHandler;
+import webserver.path.PostPath;
 import webserver.utils.CRLF;
 
 import java.util.List;
@@ -70,7 +71,7 @@ public class Request {
         }
     }
 
-    public boolean isGetRequest() {
+    public boolean isGet() {
         return line.isGet();
     }
 
@@ -88,7 +89,7 @@ public class Request {
                 );
     }
 
-    public boolean has(final PostHandler.Path path) {
+    public boolean has(final PostPath path) {
         Objects.requireNonNull(path, path + "는 null이 될 수 없습니다.");
         return line.has(path);
     }

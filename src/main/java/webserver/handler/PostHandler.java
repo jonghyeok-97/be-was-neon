@@ -14,26 +14,6 @@ import java.util.stream.Stream;
 
 public class PostHandler implements Handler{
 
-    public enum Path {
-        LOGIN("/login"),
-        REGISTER("/create");
-
-        private final String path;
-
-        Path(final String path) {
-            this.path = path;
-        }
-
-        public String getPath() {
-            return path;
-        }
-
-        public static boolean has(final String uri) {
-            return Stream.of(values())
-                    .anyMatch(postPath -> postPath.path.equals(uri));
-        }
-    }
-
     private final Request request;
 
     PostHandler(final Request request) {
