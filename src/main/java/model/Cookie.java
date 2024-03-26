@@ -14,7 +14,7 @@ public class Cookie {
 
     public static Cookie createCookie() {
         Cookie cookie = new Cookie(UUID.randomUUID().toString());
-        while (!SessionDB.has(cookie)) {
+        while (SessionDB.has(cookie)) {
             cookie = new Cookie(UUID.randomUUID().toString());
         }
         return cookie;

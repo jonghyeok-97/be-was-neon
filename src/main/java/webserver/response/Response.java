@@ -39,7 +39,7 @@ public class Response {
         }
 
         public Builder cookie(final String cookie) {
-            headers.append(CRLF.addNewLine("Set-Cookie: " + cookie));
+            headers.append(CRLF.addNewLine("Set-Cookie: sid=" + cookie + "; Path=/"));
             return this;
         }
 
