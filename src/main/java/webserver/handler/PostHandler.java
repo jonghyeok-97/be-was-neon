@@ -1,7 +1,8 @@
 package webserver.handler;
 
 import db.Database;
-import model.Session;
+import db.SessionDB;
+import model.Cookie;
 import model.User;
 import model.UserInfo;
 import org.slf4j.Logger;
@@ -48,12 +49,12 @@ public class PostHandler implements Handler{
 
         return optUser.filter(user -> user.hasPassword(optPassword.get()))
                 .map(user -> {
-                    final String sessionId = Session.createSessionID();
-                    Session.add(sessionId, user);
+                    final Cookie cookie = Cookie.createCookie();
+                    SessionDB.add(cookie, user);
                     logger.debug("로그인 성공!");
                     return new Response.Builder(StatusLine.Found_302)
                             .location(LOGIN_SUCCESS_PATH)
-                            .cookie(sessionId)
+                            .cookie(cookie.getSid())
                             .build();
                 }).orElse(createLoginFailedMessage());
     }

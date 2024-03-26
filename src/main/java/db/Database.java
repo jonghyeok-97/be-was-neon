@@ -2,15 +2,13 @@ package db;
 
 import model.User;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 public class Database {
     private static Map<String, User> users = new HashMap<>();
 
     public static void addUser(User user) {
+        Objects.requireNonNull(user, "user의 값은 " + user + " 이 될 수 없습니다.");
         users.put(user.getUserId(), user);
     }
 
