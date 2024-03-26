@@ -5,7 +5,8 @@ import java.util.stream.Stream;
 public enum PostPath {
 
     LOGIN("/login"),
-    REGISTER("/create");
+    REGISTER("/create"),
+    LOGOUT("/logout");
 
     private final String path;
 
