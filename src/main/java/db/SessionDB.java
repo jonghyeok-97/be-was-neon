@@ -9,7 +9,11 @@ import java.util.concurrent.ConcurrentHashMap;
 public class SessionDB {
     private static final Map<Cookie, User> session = new ConcurrentHashMap<>();
 
-    public static void add(final Cookie cookie, final User user) {
+    public static void add(Cookie cookie, User user) {
         session.put(cookie, user);
+    }
+
+    public static boolean has(Cookie cookie) {
+        return session.containsKey(cookie);
     }
 }

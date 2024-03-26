@@ -1,5 +1,7 @@
 package model;
 
+import db.SessionDB;
+
 import java.util.Objects;
 import java.util.UUID;
 
@@ -11,7 +13,11 @@ public class Cookie {
     }
 
     public static Cookie createCookie() {
-        return new Cookie(UUID.randomUUID().toString());
+        Cookie cookie = new Cookie(UUID.randomUUID().toString());
+        while (!SessionDB.has(cookie)) {
+            cookie = new Cookie(UUID.randomUUID().toString());
+        }
+        return cookie;
     }
 
     public String getSid() {
