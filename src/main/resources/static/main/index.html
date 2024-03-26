@@ -16,9 +16,11 @@
             <a class="btn btn_contained btn_size_s" href="/article">글쓰기</a>
           </li>
           <li class="header__menu__item">
-            <a class id="logout-btn" class="btn btn_ghost btn_size_s" href="/logout">
-              로그아웃
-            </a>
+            <form class="form" action="/logout" method="POST"> <!--로그아웃 버튼 form 태그 추가-->
+              <button id="logout-btn" class="btn btn_ghost btn_size_s " type="submit">
+                로그아웃
+              </button>
+            </form>
           </li>
         </ul>
       </header>
