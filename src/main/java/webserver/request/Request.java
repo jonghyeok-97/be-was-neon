@@ -75,6 +75,10 @@ public class Request {
         return line.isGet();
     }
 
+    public RequestHeader getHeaders() {
+        return headers;
+    }
+
     // line 이 GET이면 URI를 획득, POST면 URI를 획득하지 못함.
     public Optional<String> getUri() {
         return line.getUri();

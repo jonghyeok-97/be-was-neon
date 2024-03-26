@@ -3,6 +3,7 @@ package webserver.request;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.net.HttpCookie;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,6 +16,12 @@ public class RequestHeader {
 
     RequestHeader(final List<String> messages) {
         headers = parseTypeAndValue(messages);
+    }
+
+    public String getSid() {
+        final String cookieValue = headers.get("Cookie");
+        final String sid = cookieValue.split("=")[1];
+        return sid;
     }
 
     private Map<String, String> parseTypeAndValue(final List<String> messages) {

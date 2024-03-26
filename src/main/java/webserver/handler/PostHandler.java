@@ -9,12 +9,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import webserver.path.BasicPath;
 import webserver.request.Request;
+import webserver.request.RequestHeader;
 import webserver.response.Response;
 import webserver.response.StatusLine;
 
 import java.util.Optional;
 
-public class PostHandler implements Handler{
+public class PostHandler implements Handler {
     private static final Logger logger = LoggerFactory.getLogger(PostHandler.class);
 
     private static final String LOGIN_FAILED_PATH = "/login/failed_index.html";
@@ -49,7 +50,7 @@ public class PostHandler implements Handler{
 
         return optUser.filter(user -> user.hasPassword(optPassword.get()))
                 .map(user -> {
-                    final Cookie cookie = Cookie.createCookie();
+                    final Cookie cookie = Cookie.createRandomCookie();
                     SessionDB.add(cookie, user);
                     logger.debug("로그인 성공!");
                     return new Response.Builder(StatusLine.Found_302)
@@ -57,6 +58,17 @@ public class PostHandler implements Handler{
                             .cookie(cookie.getSid())
                             .build();
                 }).orElse(createLoginFailedMessage());
+    }
+
+    public Response logout() {
+        RequestHeader headers = request.getHeaders();
+        final String sid = headers.getSid();
+        Cookie cookie = Cookie.createCookie(sid);
+        SessionDB.delete(cookie);
+        return new Response.Builder(StatusLine.Found_302)
+                .location(BasicPath.HOME.getPath())
+                .build();
+
     }
 
     private Response createLoginFailedMessage() {
