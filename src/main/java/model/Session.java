@@ -2,6 +2,7 @@ package model;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 public class Session {
     private static final Map<String, User> session = new HashMap<>();
@@ -11,6 +12,6 @@ public class Session {
     }
 
     public static String createSessionID() {
-        return "ab123123";
+        return UUID.randomUUID().toString();
     }
 }
