@@ -4,17 +4,20 @@ import db.Database;
 import model.Session;
 import model.User;
 import model.UserInfo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import webserver.path.BasicPath;
-import webserver.path.PostPath;
 import webserver.request.Request;
 import webserver.response.Response;
 import webserver.response.StatusLine;
 
 import java.util.Optional;
-import java.util.stream.Stream;
 
 public class PostHandler implements Handler{
+    private static final Logger logger = LoggerFactory.getLogger(PostHandler.class);
+
     private static final String LOGIN_FAILED_PATH = "/login/failed_index.html";
+    private static final String LOGIN_SUCCESS_PATH = "/main/index.html";
 
     private final Request request;
 
@@ -47,8 +50,9 @@ public class PostHandler implements Handler{
                 .map(user -> {
                     final String sessionId = Session.createSessionID();
                     Session.add(sessionId, user);
+                    logger.debug("로그인 성공!");
                     return new Response.Builder(StatusLine.Found_302)
-                            .location(BasicPath.HOME.getPath())
+                            .location(LOGIN_SUCCESS_PATH)
                             .cookie(sessionId)
                             .build();
                 }).orElse(createLoginFailedMessage());
