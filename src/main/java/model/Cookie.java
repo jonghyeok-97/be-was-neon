@@ -12,12 +12,16 @@ public class Cookie {
         this.sid = sid;
     }
 
-    public static Cookie createCookie() {
+    public static Cookie createRandomCookie() {
         Cookie cookie = new Cookie(UUID.randomUUID().toString());
         while (SessionDB.has(cookie)) {
             cookie = new Cookie(UUID.randomUUID().toString());
         }
         return cookie;
+    }
+
+    public static Cookie createCookie(final String sid) {
+        return new Cookie(sid);
     }
 
     public String getSid() {

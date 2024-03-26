@@ -16,4 +16,8 @@ public class SessionDB {
     public static boolean has(Cookie cookie) {
         return session.containsKey(cookie);
     }
+
+    public static void delete(Cookie cookie) {
+        session.remove(cookie);
+    }
 }
