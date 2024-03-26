@@ -5,6 +5,7 @@ import model.Session;
 import model.User;
 import model.UserInfo;
 import webserver.path.BasicPath;
+import webserver.path.PostPath;
 import webserver.request.Request;
 import webserver.response.Response;
 import webserver.response.StatusLine;
@@ -13,6 +14,7 @@ import java.util.Optional;
 import java.util.stream.Stream;
 
 public class PostHandler implements Handler{
+    private static final String LOGIN_FAILED_PATH = "/login/failed_index.html";
 
     private final Request request;
 
@@ -49,6 +51,12 @@ public class PostHandler implements Handler{
                             .location(BasicPath.HOME.getPath())
                             .cookie(sessionId)
                             .build();
-                }).orElseThrow(() -> new IllegalArgumentException("404에러. 로그인 불가"));
+                }).orElse(createLoginFailedMessage());
+    }
+
+    private Response createLoginFailedMessage() {
+        return new Response.Builder(StatusLine.Found_302)
+                .location(LOGIN_FAILED_PATH)
+                .build();
     }
 }
