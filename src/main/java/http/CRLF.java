@@ -1,4 +1,4 @@
-package webserver.utils;
+package http;
 
 public class CRLF {
     private static final String CRLF = "\r\n";

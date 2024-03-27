@@ -1,6 +1,6 @@
 package webserver.handler;
 
-import webserver.utils.MIME;
+import http.MIME;
 import webserver.path.BasicPath;
 
 import java.io.BufferedInputStream;

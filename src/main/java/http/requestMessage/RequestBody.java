@@ -1,11 +1,10 @@
-package webserver.request;
+package http.requestMessage;
 
 import model.UserInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.*;
-import java.util.regex.PatternSyntaxException;
 
 public class RequestBody {
     private static final Logger logger = LoggerFactory.getLogger(RequestBody.class);

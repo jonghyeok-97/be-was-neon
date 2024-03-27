@@ -1,7 +1,7 @@
 package webserver.handler;
 
-import webserver.response.Response;
-import webserver.response.StatusLine;
+import http.responseMessage.Response;
+import http.responseMessage.StatusLine;
 
 import java.io.IOException;
 

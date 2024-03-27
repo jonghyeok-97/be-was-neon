@@ -1,4 +1,4 @@
-package webserver.response;
+package http.responseMessage;
 
 public enum StatusLine {
     OK_200("HTTP/1.1 200 OK "),

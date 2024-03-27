@@ -1,8 +1,8 @@
 package webserver.handler;
 
 import webserver.path.PostPath;
-import webserver.request.Request;
-import webserver.response.Response;
+import http.requestMessage.Request;
+import http.responseMessage.Response;
 
 import java.io.IOException;
 

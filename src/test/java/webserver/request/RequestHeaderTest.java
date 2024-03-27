@@ -2,6 +2,7 @@ package webserver.request;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import http.requestMessage.RequestHeader;
 
 import java.util.HashMap;
 import java.util.Map;

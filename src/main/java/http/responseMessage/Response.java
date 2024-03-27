@@ -1,7 +1,7 @@
-package webserver.response;
+package http.responseMessage;
 
-import webserver.http.Cookie;
-import webserver.utils.CRLF;
+import http.CRLF;
+import http.Cookie;
 
 public class Response {
     private final StatusLine statusLine;
@@ -40,7 +40,7 @@ public class Response {
         }
 
         public Builder cookie(final Cookie cookie) {
-            headers.append(CRLF.addNewLine("Set-Cookie: sid=" + cookie.getSid() + "; Path=/"));
+            headers.append(CRLF.addNewLine("Set-Cookie: " + cookie.getSid() + "; Path=/"));
             return this;
         }
 

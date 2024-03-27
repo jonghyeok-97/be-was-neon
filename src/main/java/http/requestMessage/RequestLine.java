@@ -1,8 +1,7 @@
-package webserver.request;
+package http.requestMessage;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import webserver.handler.PostHandler;
 import webserver.path.PostPath;
 
 import java.util.Optional;

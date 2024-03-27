@@ -1,17 +1,17 @@
 package webserver.handler;
 
 import db.Database;
-import webserver.http.SessionManager;
-import webserver.http.Cookie;
+import http.SessionManager;
+import http.Cookie;
 import model.User;
 import model.UserInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import webserver.path.BasicPath;
-import webserver.request.Request;
-import webserver.request.RequestHeader;
-import webserver.response.Response;
-import webserver.response.StatusLine;
+import http.requestMessage.Request;
+import http.requestMessage.RequestHeader;
+import http.responseMessage.Response;
+import http.responseMessage.StatusLine;
 
 import java.util.Optional;
 
@@ -63,6 +63,7 @@ public class PostHandler implements Handler {
     public Response logout() {
         RequestHeader headers = request.getHeaders();
         final String sessionID = headers.getSid();
+        Cookie cookie = new Cookie(sessionID);
         SessionManager.delete(sessionID);
         return new Response.Builder(StatusLine.Found_302)
                 .location(BasicPath.HOME.getPath())

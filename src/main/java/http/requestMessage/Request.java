@@ -1,16 +1,14 @@
-package webserver.request;
+package http.requestMessage;
 
 import model.UserInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import webserver.handler.PostHandler;
 import webserver.path.PostPath;
-import webserver.utils.CRLF;
+import http.CRLF;
 
 import java.util.*;
 import java.util.regex.PatternSyntaxException;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 public class Request {
