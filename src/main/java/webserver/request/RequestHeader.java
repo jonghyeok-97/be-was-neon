@@ -14,8 +14,8 @@ public class RequestHeader {
 
     private final Map<String, String> headers;
 
-    RequestHeader(final List<String> messages) {
-        headers = parseTypeAndValue(messages);
+    RequestHeader(final Map<String, String> headers) {
+        this.headers = headers;
     }
 
     public String getSid() {
@@ -24,15 +24,5 @@ public class RequestHeader {
         return sid;
     }
 
-    private Map<String, String> parseTypeAndValue(final List<String> messages) {
-        final Map<String, String> _headers = new HashMap<>();
-        messages.forEach(message -> {
-            final String[] splited = message.split(":");
-            String type = splited[0].trim();
-            String value = splited[1].trim();
-            logger.debug("헤더 타입 : 값 -> {} : {}", type, value);
-            _headers.put(type, value);
-        });
-        return _headers;
-    }
+
 }

@@ -7,11 +7,10 @@ import webserver.handler.PostHandler;
 import webserver.path.PostPath;
 import webserver.utils.CRLF;
 
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 import java.util.regex.PatternSyntaxException;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 public class Request {
@@ -51,14 +50,17 @@ public class Request {
         }
 
         RequestHeader createHeader() {
-            final int startHeaderPosition = 1;
-            final int lastHeaderPosition;
-            if (line.isPOST()) {
-                lastHeaderPosition = messages.size() - 2;
-                return new RequestHeader(messages.subList(startHeaderPosition, lastHeaderPosition));
-            }
-            lastHeaderPosition = messages.size();
-            return new RequestHeader(messages.subList(startHeaderPosition, lastHeaderPosition));
+            Map<String, String> headers = new HashMap<>();
+            messages.stream()
+                    .skip(1) // 스타터라인 제외
+                    .filter(message -> message.contains(":")) // 헤더는 : 를 포함한다고 가정
+                    .forEach(message -> {
+                        final String[] keyValue = message.split(":");
+                        final String headerKey = keyValue[0].trim(); // OWS 제거
+                        final String headerValue = keyValue[1].trim();
+                        headers.put(headerKey, headerValue);
+                    });
+            return new RequestHeader(headers);
         }
 
         Optional<RequestBody> createOptRequestBody() {
