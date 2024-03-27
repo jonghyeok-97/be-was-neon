@@ -6,22 +6,22 @@ import http.responseMessage.Response;
 
 import java.io.IOException;
 
-public class RequestHandler {
+public class HandlerMapper {
     private final Request request;
 
-    public RequestHandler(final Request request) {
+    public HandlerMapper(final Request request) {
         this.request = request;
     }
 
     public Response handle() throws IOException {
         if (request.has(PostPath.LOGIN)) {
-            return new PostHandler(request).login();
+            return new LoginHandler(request).handle();
         }
         if (request.has(PostPath.REGISTER)) {
-            return new PostHandler(request).registerUser();
+            return new RegisterHandler(request).handle();
         }
         if (request.has(PostPath.LOGOUT)) {
-            return new PostHandler(request).logout();
+            return new LogoutHandler(request).handle();
         }
         if (request.isGet()) {
             return new GetHandler(request.getUri().get()).handle();
