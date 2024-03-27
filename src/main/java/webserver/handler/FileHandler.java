@@ -15,11 +15,6 @@ public class FileHandler {
         this.file = file;
     }
 
-    public static boolean isExistFile(final String uri) {
-        final File file = new File(BasicPath.BASE.getPath() + uri);
-        return file.exists();
-    }
-
     public static FileHandler createFileHandler(final String uri) {
         return new FileHandler(new File(BasicPath.BASE.getPath() + uri));
     }
