@@ -3,11 +3,8 @@ package webserver.request;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.net.HttpCookie;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.regex.PatternSyntaxException;
+import java.util.Optional;
 
 public class RequestHeader {
     private static final Logger logger = LoggerFactory.getLogger(RequestHeader.class);
@@ -24,5 +21,8 @@ public class RequestHeader {
         return sid;
     }
 
-
+    Optional<Integer> getContentLength() {
+        Optional<String> optContentLength = Optional.ofNullable(headers.get("Content-Length"));
+        return optContentLength.map(Integer::parseInt);
+    }
 }
