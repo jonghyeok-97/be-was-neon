@@ -1,5 +1,6 @@
 package webserver.response;
 
+import webserver.http.Cookie;
 import webserver.utils.CRLF;
 
 public class Response {
@@ -38,8 +39,8 @@ public class Response {
             return this;
         }
 
-        public Builder cookie(final String cookie) {
-            headers.append(CRLF.addNewLine("Set-Cookie: sid=" + cookie + "; Path=/"));
+        public Builder cookie(final Cookie cookie) {
+            headers.append(CRLF.addNewLine("Set-Cookie: sid=" + cookie.getSid() + "; Path=/"));
             return this;
         }
 

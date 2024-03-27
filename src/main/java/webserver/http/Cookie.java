@@ -1,27 +1,13 @@
-package model;
-
-import db.SessionDB;
+package webserver.http;
 
 import java.util.Objects;
 import java.util.UUID;
 
 public class Cookie {
-    private final String sid;
+    private String sid;
 
-    private Cookie(final String sid) {
+    public Cookie(final String sid) {
         this.sid = sid;
-    }
-
-    public static Cookie createRandomCookie() {
-        Cookie cookie = new Cookie(UUID.randomUUID().toString());
-        while (SessionDB.has(cookie)) {
-            cookie = new Cookie(UUID.randomUUID().toString());
-        }
-        return cookie;
-    }
-
-    public static Cookie createCookie(final String sid) {
-        return new Cookie(sid);
     }
 
     public String getSid() {
