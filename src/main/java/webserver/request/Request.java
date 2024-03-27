@@ -64,14 +64,15 @@ public class Request {
         }
 
         Optional<RequestBody> createOptRequestBody() {
-            if (line.isPOST()) {
-                final int bodyPosition = messages.size() - 1;
-                final String body = messages.get(bodyPosition);
-                return Optional.of(new RequestBody(body));
+            Optional<Integer> contentLength = headers.getContentLength();
+            return contentLength.filter(length -> length != 0)
+                    .map(length -> {
+                        final int bodyPosition = messages.size() - 1;
+                        final String body = messages.get(bodyPosition);
+                        return new RequestBody(body);
+                    });
             }
-            return Optional.empty();
         }
-    }
 
     public boolean isGet() {
         return line.isGet();
@@ -100,3 +101,4 @@ public class Request {
         return line.has(path);
     }
 }
+
