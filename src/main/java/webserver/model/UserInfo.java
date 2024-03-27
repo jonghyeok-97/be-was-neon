@@ -1,4 +1,4 @@
-package model;
+package webserver.model;
 
 import java.util.stream.Stream;
 

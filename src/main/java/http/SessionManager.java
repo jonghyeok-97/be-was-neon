@@ -1,6 +1,6 @@
 package http;
 
-import model.User;
+import webserver.model.User;
 
 import java.util.Map;
 import java.util.UUID;

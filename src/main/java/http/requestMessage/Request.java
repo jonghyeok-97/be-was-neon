@@ -1,6 +1,6 @@
 package http.requestMessage;
 
-import model.UserInfo;
+import webserver.model.UserInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import webserver.path.PostPath;

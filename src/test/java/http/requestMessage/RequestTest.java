@@ -1,11 +1,10 @@
-package webserver.request;
+package http.requestMessage;
 
-import model.UserInfo;
+import webserver.model.UserInfo;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import http.requestMessage.Request;
 
 import java.util.Optional;
 

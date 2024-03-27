@@ -1,6 +1,6 @@
-package db;
+package webserver.db;
 
-import model.User;
+import webserver.model.User;
 
 import java.util.*;
 

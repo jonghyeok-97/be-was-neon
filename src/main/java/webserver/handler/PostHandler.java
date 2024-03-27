@@ -1,10 +1,10 @@
 package webserver.handler;
 
-import db.Database;
+import webserver.db.Database;
 import http.SessionManager;
 import http.Cookie;
-import model.User;
-import model.UserInfo;
+import webserver.model.User;
+import webserver.model.UserInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import webserver.path.BasicPath;
