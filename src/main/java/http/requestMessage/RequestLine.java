@@ -2,9 +2,6 @@ package http.requestMessage;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import webserver.path.PostPath;
-
-import java.util.Optional;
 
 public class RequestLine {
     private static final Logger logger = LoggerFactory.getLogger(RequestLine.class);
@@ -30,10 +27,6 @@ public class RequestLine {
 
     boolean isGet() {
         return method.isGet();
-    }
-
-    boolean has(final PostPath path) {
-        return isPOST() && uri.isSame(path);
     }
 
     Uri getUri() {

@@ -2,8 +2,6 @@ package http.requestMessage;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import webserver.handler.FileHandler;
-import webserver.path.PostPath;
 
 public class Uri {
     private static final Logger logger = LoggerFactory.getLogger(Uri.class);
@@ -15,8 +13,8 @@ public class Uri {
         this.uri = uri;
     }
 
-    boolean isSame(final PostPath path) {
-        return path.getPath().equals(uri);
+    public boolean isSame(final String other) {
+        return uri.equals(other);
     }
 
     public String getUri() {

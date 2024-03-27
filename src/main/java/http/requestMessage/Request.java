@@ -3,7 +3,6 @@ package http.requestMessage;
 import webserver.model.UserInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import webserver.path.PostPath;
 import http.CRLF;
 
 import java.util.*;
@@ -92,11 +91,6 @@ public class Request {
                 .flatMap(info ->
                         optBody.flatMap(body -> body.get(info))
                 );
-    }
-
-    public boolean has(final PostPath path) {
-        Objects.requireNonNull(path, path + "는 null이 될 수 없습니다.");
-        return line.has(path);
     }
 }
 
