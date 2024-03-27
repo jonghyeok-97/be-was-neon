@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 public class RequestHeader {
     private static final Logger logger = LoggerFactory.getLogger(RequestHeader.class);
@@ -15,10 +16,12 @@ public class RequestHeader {
         this.headers = headers;
     }
 
-    public String getSid() {
-        final String cookieValue = headers.get("Cookie");
-        final String sid = cookieValue.split("=")[1];
-        return sid;
+    public Optional<String> getSessionId() {
+        final String cookieLine = headers.get("Cookie");
+        final String[] cookies = cookieLine.split(";");
+        return Stream.of(cookies)
+                .filter(cookie -> "SID".equals(cookie.trim().split("=")[0]))
+                .findFirst();
     }
 
     Optional<Integer> getContentLength() {

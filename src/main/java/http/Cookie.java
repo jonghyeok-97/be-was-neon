@@ -1,18 +1,19 @@
 package http;
 
-import java.util.Objects;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Cookie {
-    private final String sid;
-    private int maxAge;
-    private String path;
+    private final String sessionId;
+    private final Map<String, String> attributes;
 
-    public Cookie(final String sid) {
-        this.sid = "sid=" + sid;
+    public Cookie(final String sessionId) {
+        this.sessionId = sessionId;
+        this.attributes = new HashMap<>();
     }
 
-    public void setMaxAge(final int maxAge) {
-        this.maxAge = maxAge;
+    public void set(final String key, final String value) {
+        attributes.put(key, value);
     }
 
     public String get() {

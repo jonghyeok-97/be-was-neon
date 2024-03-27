@@ -51,24 +51,29 @@ public class PostHandler implements Handler {
         return optUser.filter(user -> user.hasPassword(optPassword.get()))
                 .map(user -> {
                     final String sessionID = SessionManager.createSessionID();
+                    Cookie cookie = new Cookie(sessionID);
                     SessionManager.add(sessionID, user);
                     logger.debug("로그인 성공!");
                     return new Response.Builder(StatusLine.Found_302)
                             .location(LOGIN_SUCCESS_PATH)
-                            .cookie(new Cookie(sessionID))
+                            .setCookie(cookie)
                             .build();
                 }).orElse(createLoginFailedMessage());
     }
 
     public Response logout() {
         RequestHeader headers = request.getHeaders();
-        final String sessionID = headers.getSid();
-        Cookie cookie = new Cookie(sessionID);
-        SessionManager.delete(sessionID);
-        return new Response.Builder(StatusLine.Found_302)
-                .location(BasicPath.HOME.getPath())
-                .build();
+        final Optional<String> sessionID = headers.getSessionId();
 
+        return sessionID.map(sessionId -> {
+            SessionManager.delete(sessionId);
+            Cookie cookie = new Cookie(sessionId);
+            cookie.set("Max-age", "0");
+            return new Response.Builder(StatusLine.Found_302)
+                    .location(BasicPath.HOME.getPath())
+                    .setCookie(cookie)
+                    .build();
+        }).orElseThrow(() -> new IllegalArgumentException("404에러"));
     }
 
     private Response createLoginFailedMessage() {
