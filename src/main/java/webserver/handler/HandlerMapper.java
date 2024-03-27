@@ -1,5 +1,6 @@
 package webserver.handler;
 
+import http.requestMessage.Uri;
 import webserver.path.PostPath;
 import http.requestMessage.Request;
 import http.responseMessage.Response;
@@ -14,6 +15,7 @@ public class HandlerMapper {
     }
 
     public Response handle() throws IOException {
+        final Uri uri = request.getUri();
         if (request.has(PostPath.LOGIN)) {
             return new LoginHandler(request).handle();
         }

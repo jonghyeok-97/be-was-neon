@@ -36,11 +36,7 @@ public class RequestLine {
         return isPOST() && uri.isSame(path);
     }
 
-    // GET 요청일 때만, 허락
-    Optional<String> getUri() {
-        if (method.isPOST()) {
-            return Optional.empty();
-        }
-        return Optional.of(uri.getUri());
+    Uri getUri() {
+        return uri;
     }
 }

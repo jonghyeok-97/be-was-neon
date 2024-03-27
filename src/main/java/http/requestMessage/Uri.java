@@ -19,7 +19,7 @@ public class Uri {
         return path.getPath().equals(uri);
     }
 
-    String getUri() {
+    public String getUri() {
         return uri;
     }
 }

@@ -1,6 +1,7 @@
 package webserver.handler;
 
 import http.MIME;
+import http.requestMessage.Uri;
 import webserver.path.BasicPath;
 
 import java.io.BufferedInputStream;
@@ -15,8 +16,8 @@ public class FileHandler {
         this.file = file;
     }
 
-    public static FileHandler createFileHandler(final String uri) {
-        return new FileHandler(new File(BasicPath.BASE.getPath() + uri));
+    public static FileHandler createFileHandler(final Uri uri) {
+        return new FileHandler(new File(BasicPath.BASE.getPath() + uri.getUri()));
     }
 
     public byte[] read() throws IOException {
