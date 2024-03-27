@@ -15,13 +15,17 @@ public class Cookie {
         this.maxAge = maxAge;
     }
 
-
-
-    public String getSid() {
-        return sid;
+    public String get() {
+        final StringBuilder sb = new StringBuilder();
+        sb.append(createCookieString("SID", sessionId));
+        attributes.forEach((key, value) -> {
+            final String cookieString = createCookieString(key, value);
+            sb.append(cookieString);
+        });
+        return sb.toString();
     }
 
-    public String getMaxAge() {
-        return "Max-Age=" + maxAge;
+    private String createCookieString(final String key, final String value) {
+        return key + "=" + value + ";";
     }
 }
