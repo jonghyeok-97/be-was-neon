@@ -1,10 +1,9 @@
 package webserver.db;
 
-import webserver.model.User;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import webserver.db.Database;
+import webserver.model.User;
 
 import java.util.Optional;
 

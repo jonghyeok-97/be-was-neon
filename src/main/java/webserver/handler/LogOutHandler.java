@@ -10,17 +10,16 @@ import webserver.path.BasicPath;
 
 import java.util.Optional;
 
-public class LogoutHandler implements Handler {
-    private final Request request;
+public class LogOutHandler implements Handler {
+    private final RequestHeader header;
 
-    LogoutHandler(Request request) {
-        this.request = request;
+    LogOutHandler(RequestHeader header) {
+        this.header = header;
     }
 
     @Override
     public Response handle() {
-        RequestHeader headers = request.getHeaders();
-        final Optional<String> sessionID = headers.getSessionId();
+        final Optional<String> sessionID = header.getSessionId();
 
         return sessionID.map(sessionId -> {
             SessionManager.delete(sessionId);
