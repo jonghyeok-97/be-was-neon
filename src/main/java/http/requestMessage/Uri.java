@@ -3,8 +3,6 @@ package http.requestMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.File;
-
 public class Uri {
     private static final Logger logger = LoggerFactory.getLogger(Uri.class);
 
@@ -19,7 +17,7 @@ public class Uri {
         return uri.equals(other);
     }
 
-    public File createFile(final String path) {
-        return new File(path + uri);
+    public String getUri() {
+        return uri;
     }
 }
