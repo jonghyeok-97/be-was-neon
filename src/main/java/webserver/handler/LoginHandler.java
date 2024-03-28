@@ -36,9 +36,10 @@ public class LoginHandler extends UserInfoHandler{
                 }).orElse(createLoginFailedResponse());
     }
 
-    private Response createLoginSuccessResponse(Cookie cookie) {
-        return new Response.Builder(StatusLine.Found_302)
-                .location(LOGIN_SUCCESS_PATH)
+    private Response createLoginSuccessResponse(Cookie cookie, final byte[] data, final String subType) {
+        return new Response.Builder(StatusLine.OK_200)
+                .contentType(subType)
+                .contentLength(data)
                 .setCookie(cookie)
                 .build();
     }
