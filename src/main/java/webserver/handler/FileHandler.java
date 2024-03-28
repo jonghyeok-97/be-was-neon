@@ -10,6 +10,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 
 public class FileHandler {
+    private static final String BASIC_PATH = "src/main/resources/static";
     private final File file;
 
     private FileHandler(final File file){
@@ -17,7 +18,7 @@ public class FileHandler {
     }
 
     public static FileHandler createFileHandler(final Uri uri) {
-        return new FileHandler(new File(BasicPath.BASE.getPath() + uri.getUri()));
+        return new FileHandler(new File(BASIC_PATH + uri.getUri()));
     }
 
     public byte[] read() throws IOException {
