@@ -5,28 +5,29 @@ import http.requestMessage.Request;
 import http.responseMessage.Response;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.function.Predicate;
 
 public class HandlerMapper {
-    private final Request request;
+    private final Map<Predicate<Uri>, Handler> handlerMapper = new HashMap<>();
+    private final Uri uri;
 
     public HandlerMapper(final Request request) {
-        this.request = request;
+        this.uri = request.getUri();
+        handlerMapper.put(uri -> request.isPost() && uri.isSame("/login"), new LoginHandler(request.getOptBody().get()));
+        handlerMapper.put(uri -> request.isPost() && uri.isSame("/create"), new RegisterHandler(request.getOptBody().get()));
+        handlerMapper.put(uri -> request.isPost() && uri.isSame("/logout"), new LogOutHandler(request.getHeader()));
+        handlerMapper.put(uri -> request.isGet(), new GetHandler(uri));
     }
 
     public Response handle() throws IOException {
-        final Uri uri = request.getUri();
-        if (uri.isSame("/login")) {
-            return new LoginHandler(request.getOptBody().get()).handle();
-        }
-        if (uri.isSame("/create")) {
-            return new RegisterHandler(request.getOptBody().get()).handle();
-        }
-        if (uri.isSame("/logout")) {
-            return new LogOutHandler(request.getHeader()).handle();
-        }
-        if (request.isGet()) {
-            return new GetHandler(uri).handle();
-        }
-        throw new IllegalArgumentException("404에러");
+        final Handler handler = handlerMapper.keySet().stream()
+                .filter(predi -> predi.test(uri))
+                .map(handlerMapper::get)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("404에러"));
+
+        return handler.handle();
     }
 }

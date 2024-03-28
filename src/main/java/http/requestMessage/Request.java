@@ -77,6 +77,10 @@ public class Request {
         return line.isGet();
     }
 
+    public boolean isPost() {
+        return line.isPOST();
+    }
+
     public RequestHeader getHeader() {
         return headers;
     }
