@@ -14,7 +14,6 @@ public class LoginHandler extends UserInfoHandler{
     private static final String LOGIN_FAILED_PATH = "/login/failed_index.html";
     private static final String LOGIN_SUCCESS_PATH = "/main/index.html";
 
-
     LoginHandler(final RequestBody body) {
         super(body);
     }
@@ -27,16 +26,20 @@ public class LoginHandler extends UserInfoHandler{
         return optUser.filter(user -> user.hasPassword(password))
                 .map(user -> {
                     final String sessionID = SessionManager.createSessionID();
-                    Cookie cookie = new Cookie(sessionID);
+                    final Cookie cookie = new Cookie(sessionID);
                     SessionManager.add(sessionID, user);
-                    return new Response.Builder(StatusLine.Found_302)
-                            .location(LOGIN_SUCCESS_PATH)
-                            .setCookie(cookie)
-                            .build();
-                }).orElse(createLoginFailedMessage());
+                    return createLoginSuccessResponse(cookie);
+                }).orElse(createLoginFailedResponse());
     }
 
-    private Response createLoginFailedMessage() {
+    private Response createLoginSuccessResponse(Cookie cookie) {
+        return new Response.Builder(StatusLine.Found_302)
+                .location(LOGIN_SUCCESS_PATH)
+                .setCookie(cookie)
+                .build();
+    }
+
+    private Response createLoginFailedResponse() {
         return new Response.Builder(StatusLine.Found_302)
                 .location(LOGIN_FAILED_PATH)
                 .build();

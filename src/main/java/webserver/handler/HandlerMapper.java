@@ -20,8 +20,8 @@ public class HandlerMapper {
         handlerMapper.put(uri -> request.isGet(), new GetHandler(uri));
     }
 
-    public Response handle() {
-        final Handler handler = handlerMapper.keySet().stream()
+    public Handler find() {
+        return handlerMapper.keySet().stream()
                 .filter(predi -> predi.test(uri))
                 .map(handlerMapper::get)
                 .findFirst()
