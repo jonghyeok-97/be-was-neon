@@ -16,17 +16,17 @@ public class Cookie {
         attributes.put(key, value);
     }
 
-    public String get() {
+    public String getCookie() {
         final StringBuilder sb = new StringBuilder();
-        sb.append(createCookieString("SID", sessionId));
+        sb.append(convertToMessage("SID", sessionId));
         attributes.forEach((key, value) -> {
-            final String cookieString = createCookieString(key, value);
+            final String cookieString = convertToMessage(key, value);
             sb.append(cookieString);
         });
         return sb.toString();
     }
 
-    private String createCookieString(final String key, final String value) {
+    private String convertToMessage(final String key, final String value) {
         return key + "=" + value + ";";
     }
 }
