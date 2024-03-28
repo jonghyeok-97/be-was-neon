@@ -22,8 +22,8 @@ public class LogOutHandler implements Handler {
 
         return optSessionID.map(sessionId -> {
             SessionManager.delete(sessionId);
-            Cookie cookie = new Cookie(sessionId);
-            cookie.set("Max-age", "0");
+            Cookie cookie = new Cookie();
+            cookie.set("SID", sessionId).set("Max-age", "0");
             return createRedirectResponse(cookie);
         }).orElseThrow(() -> new IllegalArgumentException("404에러"));
     }

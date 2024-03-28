@@ -1,27 +1,25 @@
 package http;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class Cookie {
-    private final String sessionId;
     private final Map<String, String> attributes;
 
-    public Cookie(final String sessionId) {
-        this.sessionId = sessionId;
-        this.attributes = new HashMap<>();
+    public Cookie() {
+        attributes = new LinkedHashMap<>();
     }
 
-    public void set(final String key, final String value) {
+    public Cookie set(final String key, final String value) {
         attributes.put(key, value);
+        return this;
     }
 
     public String getCookie() {
         final StringBuilder sb = new StringBuilder();
-        sb.append(convertToMessage("SID", sessionId));
         attributes.forEach((key, value) -> {
-            final String cookieString = convertToMessage(key, value);
-            sb.append(cookieString);
+            final String cookieMessage = convertToMessage(key, value);
+            sb.append(cookieMessage);
         });
         return sb.toString();
     }

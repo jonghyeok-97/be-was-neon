@@ -14,19 +14,20 @@ public class LoginHandler extends UserInfoHandler{
     private static final String LOGIN_FAILED_PATH = "/login/failed_index.html";
     private static final String LOGIN_SUCCESS_PATH = "/main/index.html";
 
-    LoginHandler(final RequestBody body) {
+    LoginHandler(RequestBody body) {
         super(body);
     }
 
     public Response handle() {
         final String userId = userInfos.get("userId");
         final String password = userInfos.get("password");
-        final Optional<User> optUser = Database.findUserById(userId);
+        Optional<User> optUser = Database.findUserById(userId);
 
         return optUser.filter(user -> user.hasPassword(password))
                 .map(user -> {
                     final String sessionID = SessionManager.createSessionID();
-                    final Cookie cookie = new Cookie(sessionID);
+                    Cookie cookie = new Cookie();
+                    cookie.set("SID", sessionID);
                     SessionManager.add(sessionID, user);
                     return createLoginSuccessResponse(cookie);
                 }).orElse(createLoginFailedResponse());
