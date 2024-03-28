@@ -18,10 +18,9 @@ public class RegisterHandler extends UserInfoHandler {
         final String password = userInfos.get("password");
         final String name = userInfos.get("name");
 
-        final User user = new User.Builder(userId, password)
-                .name(name)
-                .build();
+        final User user = User.createUserForRegister(userId, password, name);
         Database.addUser(user);
+
         return new Response.Builder(StatusLine.Found_302)
                 .location(BasicPath.HOME.getPath())
                 .build();
