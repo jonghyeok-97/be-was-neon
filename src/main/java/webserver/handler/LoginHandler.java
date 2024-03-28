@@ -13,6 +13,7 @@ import java.util.Optional;
 public class LoginHandler extends UserInfoHandler{
     private static final String LOGIN_FAILED_PATH = "/login/failed_index.html";
     private static final String LOGIN_SUCCESS_PATH = "/main/index.html";
+    private final FileHandler fileHandler = new FileHandler(LOGIN_SUCCESS_PATH);
 
     LoginHandler(RequestBody body) {
         super(body);
@@ -29,7 +30,9 @@ public class LoginHandler extends UserInfoHandler{
                     Cookie cookie = new Cookie();
                     cookie.set("SID", sessionID);
                     SessionManager.add(sessionID, user);
-                    return createLoginSuccessResponse(cookie);
+                    final String subType = fileHandler.findSubTypeOfMIME();
+                    final byte[] data = fileHandler.showHTMLWith(user.getName());
+                    return createLoginSuccessResponse(cookie, data, subType);
                 }).orElse(createLoginFailedResponse());
     }
 
