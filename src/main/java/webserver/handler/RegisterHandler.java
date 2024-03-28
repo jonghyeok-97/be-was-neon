@@ -1,29 +1,25 @@
 package webserver.handler;
 
-import http.requestMessage.Request;
+import http.requestMessage.RequestBody;
 import http.responseMessage.Response;
 import http.responseMessage.StatusLine;
 import webserver.db.Database;
 import webserver.model.User;
-import webserver.model.UserInfo;
 import webserver.path.BasicPath;
 
-import java.util.Optional;
+public class RegisterHandler extends UserInfoHandler {
 
-public class RegisterHandler implements Handler{
-    private final Request request;
-
-    RegisterHandler(Request request) {
-        this.request = request;
+    RegisterHandler(RequestBody body) {
+        super(body);
     }
 
     public Response handle() {
-        final Optional<String> optId = request.get(UserInfo.USER_ID);
-        final Optional<String> optPassword = request.get(UserInfo.PASSWORD);
-        final Optional<String> optName = request.get(UserInfo.NICKNAME);
+        final String userId = userInfos.get("userId");
+        final String password = userInfos.get("password");
+        final String name = userInfos.get("name");
 
-        final User user = new User.Builder(optId.get(), optPassword.get())
-                .name(optName.get())
+        final User user = new User.Builder(userId, password)
+                .name(name)
                 .build();
         Database.addUser(user);
         return new Response.Builder(StatusLine.Found_302)

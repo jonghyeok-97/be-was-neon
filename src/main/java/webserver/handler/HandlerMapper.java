@@ -16,13 +16,13 @@ public class HandlerMapper {
     public Response handle() throws IOException {
         final Uri uri = request.getUri();
         if (uri.isSame("/login")) {
-            return new LoginHandler(request).handle();
+            return new LoginHandler(request.getOptBody().get()).handle();
         }
         if (uri.isSame("/create")) {
-            return new RegisterHandler(request).handle();
+            return new RegisterHandler(request.getOptBody().get()).handle();
         }
         if (uri.isSame("/logout")) {
-            return new LogoutHandler(request).handle();
+            return new LogOutHandler(request.getHeader()).handle();
         }
         if (request.isGet()) {
             return new GetHandler(uri).handle();

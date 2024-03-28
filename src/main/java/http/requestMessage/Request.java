@@ -1,11 +1,13 @@
 package http.requestMessage;
 
-import webserver.model.UserInfo;
+import http.CRLF;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import http.CRLF;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 import java.util.regex.PatternSyntaxException;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -75,22 +77,16 @@ public class Request {
         return line.isGet();
     }
 
-    public RequestHeader getHeaders() {
+    public RequestHeader getHeader() {
         return headers;
     }
 
-    // line 이 GET이면 URI를 획득, POST면 URI를 획득하지 못함.
     public Uri getUri() {
         return line.getUri();
     }
 
-    public Optional<String> get(final UserInfo userInfo) {
-        // ofNullable 구문  :  userInfo 가 null 이 아니면 flatMap 실행
-        // flatMap 구문   :   optBody가 null 이 아니면 body.findValueBy(info) 실행
-        return Optional.ofNullable(userInfo)
-                .flatMap(info ->
-                        optBody.flatMap(body -> body.get(info))
-                );
+    public Optional<RequestBody> getOptBody() {
+        return optBody;
     }
 }
 
