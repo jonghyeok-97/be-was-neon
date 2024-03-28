@@ -1,10 +1,9 @@
 package webserver.handler;
 
-import http.requestMessage.Uri;
 import http.requestMessage.Request;
+import http.requestMessage.Uri;
 import http.responseMessage.Response;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Predicate;
@@ -21,7 +20,7 @@ public class HandlerMapper {
         handlerMapper.put(uri -> request.isGet(), new GetHandler(uri));
     }
 
-    public Response handle() throws IOException {
+    public Response handle() {
         final Handler handler = handlerMapper.keySet().stream()
                 .filter(predi -> predi.test(uri))
                 .map(handlerMapper::get)

@@ -17,7 +17,7 @@ public class GetHandler implements Handler {
     }
 
     public Response handle() {
-        final FileHandler fileHandler = FileHandler.createFileHandler(uri);
+        final FileHandler fileHandler = new FileHandler(uri);
         final String subTypeOfMIME = fileHandler.findSubTypeOfMIME();
 
         try {
