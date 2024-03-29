@@ -28,8 +28,7 @@ public class UserListHandler implements Handler {
                     .build();
         }
 
-        // 세션 있으면 name.txt란 파일에
-        List<String> allUserNames = Database.findAllUserName();
+        List<String> allUserNames = Database.findAllUser().stream().map(User::getName).collect(Collectors.toList());
         FileHandler fileHandler = new FileHandler("/list/name.txt");
         fileHandler.write(allUserNames);
         String subType = fileHandler.findSubTypeOfMIME();
