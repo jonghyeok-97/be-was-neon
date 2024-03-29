@@ -7,16 +7,17 @@ import webserver.db.Database;
 import webserver.model.User;
 import webserver.path.BasicPath;
 
-public class RegisterHandler extends UserInfoHandler {
+public class RegisterHandler implements Handler {
+    private final UserInfo userInfo;
 
     RegisterHandler(RequestBody body) {
-        super(body);
+        this.userInfo = new UserInfo(body);
     }
 
     public Response handle() {
-        final String userId = userInfos.get("userId");
-        final String password = userInfos.get("password");
-        final String name = userInfos.get("name");
+        final String userId = userInfo.get("userId");
+        final String password = userInfo.get("password");
+        final String name = userInfo.get("name");
 
         final User user = User.createUserForRegister(userId, password, name);
         Database.addUser(user);

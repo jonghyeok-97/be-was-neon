@@ -6,10 +6,10 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-public abstract class UserInfoHandler implements Handler {
-    protected Map<String, String> userInfos;
+public class UserInfo {
+    private final Map<String, String> userInfos;
 
-    UserInfoHandler(final RequestBody body) {
+    UserInfo(final RequestBody body) {
         final String bodyLine = body.getBody();
         String[] querys = getQuerys(bodyLine);
         this.userInfos = getUserInfo(querys);
@@ -30,4 +30,9 @@ public abstract class UserInfoHandler implements Handler {
                 });
         return _userInfo;
     }
+
+    String get(String type) {
+        return userInfos.get(type);
+    }
 }
+
