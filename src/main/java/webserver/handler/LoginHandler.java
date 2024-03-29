@@ -27,11 +27,10 @@ public class LoginHandler extends UserInfoHandler{
         return optUser.filter(user -> user.hasPassword(password))
                 .map(user -> {
                     final String sessionID = SessionManager.createSessionID();
-                    Cookie cookie = new Cookie();
-                    cookie.set("SID", sessionID);
                     SessionManager.add(sessionID, user);
+                    final Cookie cookie = setCookie(sessionID);
                     final String subType = fileHandler.findSubTypeOfMIME();
-                    final byte[] data = fileHandler.showHTMLWith(user.getName());
+                    final byte[] data = fileHandler.makeDynamicHTMLWith(user.getName());
                     return createLoginSuccessResponse(cookie, data, subType);
                 }).orElse(createLoginFailedResponse());
     }
@@ -48,5 +47,11 @@ public class LoginHandler extends UserInfoHandler{
         return new Response.Builder(StatusLine.Found_302)
                 .location(LOGIN_FAILED_PATH)
                 .build();
+    }
+
+    private Cookie setCookie(final String sessionID) {
+        Cookie cookie = new Cookie();
+        cookie.set("SID", sessionID);
+        return cookie;
     }
 }

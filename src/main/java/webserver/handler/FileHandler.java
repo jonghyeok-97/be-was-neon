@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.Objects;
 
 public class FileHandler {
@@ -42,22 +43,26 @@ public class FileHandler {
         return MIME.find(fileType).getSubType();
     }
 
-    byte[] showHTMLWith(final String userName) {
-        StringBuilder sb = new StringBuilder();
+    byte[] makeDynamicHTMLWith(final String userName) {
         try (BufferedReader br = new BufferedReader(new FileReader(file))){
-            String line;
-            while ((line = br.readLine()) != null) {
-                if (line.contains("account")) {
-                    sb.append(line.replace("account", userName));
-                    continue;
-                }
-                sb.append(line);
-            }
-            return sb.toString().getBytes();
+            final StringBuilder html = changeToDynamicHTML(br, userName);
+            return html.toString().getBytes(StandardCharsets.UTF_8);
         } catch (IOException e) {
             logger.error(e.getMessage());
             throw new IllegalArgumentException("500에러");
         }
+    }
 
+    private StringBuilder changeToDynamicHTML(BufferedReader br, final String userName) throws IOException{
+        final StringBuilder html = new StringBuilder();
+        String line;
+        while ((line = br.readLine()) != null) {
+            if (line.contains("account")) {
+                html.append(line.replace("account", userName));
+                continue;
+            }
+            html.append(line);
+        }
+        return html;
     }
 }
