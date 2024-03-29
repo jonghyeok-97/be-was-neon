@@ -3,7 +3,6 @@ package webserver.db;
 import webserver.model.User;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class Database {
     private static Map<String, User> users = new HashMap<>();
@@ -17,9 +16,7 @@ public class Database {
         return Optional.ofNullable(users.get(userId));
     }
 
-    public static List<String> findAllUserName() {
-        return users.values().stream()
-                .map(User::getName)
-                .collect(Collectors.toList());
+    public static Collection<User> findAllUser() {
+        return users.values();
     }
 }

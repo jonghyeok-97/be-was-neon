@@ -5,9 +5,11 @@ import http.requestMessage.RequestHeader;
 import http.responseMessage.Response;
 import http.responseMessage.StatusLine;
 import webserver.db.Database;
+import webserver.model.User;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class UserListHandler implements Handler {
     private final RequestHeader header;
@@ -32,7 +34,7 @@ public class UserListHandler implements Handler {
         }
 
         // 세션 있으면 name.txt란 파일에
-        List<String> allUserNames = Database.findAllUserName();
+        List<String> allUserNames = Database.findAllUser().stream().map(User::getName).collect(Collectors.toList());
         FileHandler fileHandler = new FileHandler("/list/name.txt");
         fileHandler.write(allUserNames);
         String subType = fileHandler.findSubTypeOfMIME();
