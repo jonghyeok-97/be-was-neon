@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
+import java.util.List;
 import java.util.Objects;
 
 public class FileHandler {
@@ -30,12 +31,14 @@ public class FileHandler {
         }
     }
 
-    byte[] read() throws IOException {
-        final byte[] fileDatas = new byte[(int) file.length()];
+    byte[] read() {
+        final byte[] data = new byte[(int) file.length()];
         try (final BufferedInputStream bis = new BufferedInputStream(new FileInputStream(file))) {
-            bis.read(fileDatas);
+            bis.read(data);
+            return data;
+        } catch (IOException e) {
+            throw new IllegalArgumentException("500에러");
         }
-        return fileDatas;
     }
 
     String findSubTypeOfMIME() {
