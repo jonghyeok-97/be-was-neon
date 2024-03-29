@@ -10,18 +10,19 @@ import webserver.model.User;
 
 import java.util.Optional;
 
-public class LoginHandler extends UserInfoHandler{
+public class LoginHandler implements Handler{
     private static final String LOGIN_FAILED_PATH = "/login/failed_index.html";
     private static final String LOGIN_SUCCESS_PATH = "/main/index.html";
     private final FileHandler fileHandler = new FileHandler(LOGIN_SUCCESS_PATH);
+    private final UserInfo userInfo;
 
     LoginHandler(RequestBody body) {
-        super(body);
+        this.userInfo = new UserInfo(body);
     }
 
     public Response handle() {
-        final String userId = userInfos.get("userId");
-        final String password = userInfos.get("password");
+        final String userId = userInfo.get("userId");
+        final String password = userInfo.get("password");
         Optional<User> optUser = Database.findUserById(userId);
 
         return optUser.filter(user -> user.hasPassword(password))
