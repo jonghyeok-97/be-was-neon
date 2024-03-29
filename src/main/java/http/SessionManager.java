@@ -26,4 +26,8 @@ public class SessionManager {
     public static void delete(String sessionId) {
         sessionStorage.remove(sessionId);
     }
+
+    public static boolean hasSessionID(String id) {
+        return sessionStorage.containsKey(id);
+    }
 }

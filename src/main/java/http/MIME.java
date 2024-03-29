@@ -10,7 +10,8 @@ public enum MIME {
     ICO(".ico", "image/x-icon"),
     PNG(".png", "image/png"),
     JPG(".jpg", "image/jpg"),
-    JPEG(".jpeg", "image/jpeg");
+    JPEG(".jpeg", "image/jpeg"),
+    TXT(".txt", "text/plain");
 
     private final String type;
     private final String subType;
