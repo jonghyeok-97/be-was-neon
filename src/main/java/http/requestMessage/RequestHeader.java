@@ -17,12 +17,12 @@ public class RequestHeader {
     }
 
     public Optional<String> getSessionID() {
-        final String cookieLine = headers.get("Cookie");
-        final String[] cookies = cookieLine.split(";");
-        return Stream.of(cookies)
-                .filter(cookie -> cookie.contains("SID"))
-                .map(sidLine -> sidLine.trim().split("=")[1])
-                .findFirst();
+        final Optional<String> optCookieLine = Optional.ofNullable(headers.get("Cookie"));
+        return optCookieLine.map(cookieLine -> cookieLine.split(";"))
+                .flatMap(cookies -> Stream.of(cookies)
+                        .filter(cookie -> cookie.contains("SID"))
+                        .map(sidLine -> sidLine.trim().split("=")[1])
+                        .findFirst());
     }
 
     Optional<Integer> getContentLength() {
