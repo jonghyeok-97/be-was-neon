@@ -1,4 +1,4 @@
-package http;
+package webserver.db;
 
 import webserver.model.User;
 

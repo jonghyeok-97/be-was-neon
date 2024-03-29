@@ -1,7 +1,7 @@
 package webserver.handler;
 
 import http.Cookie;
-import http.SessionManager;
+import webserver.db.SessionManager;
 import http.requestMessage.RequestHeader;
 import http.responseMessage.Response;
 import http.responseMessage.StatusLine;

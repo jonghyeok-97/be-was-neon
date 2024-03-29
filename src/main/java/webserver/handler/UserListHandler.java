@@ -1,6 +1,6 @@
 package webserver.handler;
 
-import http.SessionManager;
+import webserver.db.SessionManager;
 import http.requestMessage.RequestHeader;
 import http.responseMessage.Response;
 import http.responseMessage.StatusLine;
@@ -18,9 +18,6 @@ public class UserListHandler implements Handler {
 
     @Override
     public Response handle() {
-        // 1. 로그인했는지 확인 -> 들어온 세션이 있는지 확ㅇ;ㄴ
-        // 2. 있으면 user목록 보여주기
-        // 3. 없으면 로그인페이지로 리다이렉트
         Optional<String> optSessionID = header.getSessionID();
 
         // 서버에 세션있으면 sessionID 그대로 반환, 세션이 없으면 "" 반환
