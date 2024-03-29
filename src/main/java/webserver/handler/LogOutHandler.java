@@ -18,7 +18,7 @@ public class LogOutHandler implements Handler {
 
     @Override
     public Response handle() {
-        final Optional<String> optSessionID = header.getSessionId();
+        final Optional<String> optSessionID = header.getSessionID();
 
         return optSessionID.map(sessionId -> {
             SessionManager.delete(sessionId);
