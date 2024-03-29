@@ -16,11 +16,12 @@ public class RequestHeader {
         this.headers = headers;
     }
 
-    public Optional<String> getSessionId() {
+    public Optional<String> getSessionID() {
         final String cookieLine = headers.get("Cookie");
         final String[] cookies = cookieLine.split(";");
         return Stream.of(cookies)
-                .filter(cookie -> "SID".equals(cookie.trim().split("=")[0]))
+                .filter(cookie -> cookie.contains("SID"))
+                .map(sidLine -> sidLine.trim().split("=")[1])
                 .findFirst();
     }
 

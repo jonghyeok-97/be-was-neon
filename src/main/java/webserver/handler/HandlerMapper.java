@@ -18,6 +18,7 @@ public class HandlerMapper {
             handlerMapper.put(uri -> request.isPost() && uri.isSame("/create"), new RegisterHandler(body));
         });
         handlerMapper.put(uri -> request.isPost() && uri.isSame("/logout"), new LogOutHandler(request.getHeader()));
+        handlerMapper.put(uri -> request.isGet() && uri.isSame("/user/list"), new UserListHandler(request.getHeader()));
         handlerMapper.put(uri -> request.isGet(), new GetHandler(uri));
     }
 

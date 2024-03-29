@@ -1,5 +1,6 @@
 package webserver.handler;
 
+import http.CRLF;
 import http.MIME;
 import http.requestMessage.Uri;
 import org.slf4j.Logger;
@@ -49,6 +50,16 @@ public class FileHandler {
             return html.toString().getBytes(StandardCharsets.UTF_8);
         } catch (IOException e) {
             logger.error(e.getMessage());
+            throw new IllegalArgumentException("500에러");
+        }
+    }
+
+    void write(List<String> userNames) {
+        try (FileWriter fw = new FileWriter(file)) {
+            for (String name : userNames) {
+                fw.write(CRLF.addNewLine(name));
+            }
+        } catch (IOException e) {
             throw new IllegalArgumentException("500에러");
         }
     }
