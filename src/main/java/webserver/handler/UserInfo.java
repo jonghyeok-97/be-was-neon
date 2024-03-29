@@ -6,13 +6,17 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-public abstract class UserInfoHandler implements Handler {
-    protected Map<String, String> userInfos;
+public class UserInfo {
+    private final Map<String, String> userInfos;
 
-    UserInfoHandler(final RequestBody body) {
+    public UserInfo(RequestBody body) {
         final String bodyLine = body.getBody();
         String[] querys = getQuerys(bodyLine);
         this.userInfos = getUserInfo(querys);
+    }
+
+    String get(final String type) {
+        return userInfos.get(type);
     }
 
     private String[] getQuerys(final String bodyLine) {
