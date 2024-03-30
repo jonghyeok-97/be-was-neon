@@ -79,4 +79,8 @@ public class FileHandler {
         }
         return html;
     }
+
+    public boolean canProcess() {
+        return file.exists();
+    }
 }

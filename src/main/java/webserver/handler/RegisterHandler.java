@@ -1,6 +1,6 @@
 package webserver.handler;
 
-import http.requestMessage.RequestBody;
+import http.requestMessage.Request;
 import http.responseMessage.Response;
 import http.responseMessage.StatusLine;
 import webserver.db.Database;
@@ -9,9 +9,16 @@ import webserver.path.BasicPath;
 
 public class RegisterHandler implements Handler {
     private final UserInfo userInfo;
+    private final Request request;
 
-    RegisterHandler(RequestBody body) {
-        this.userInfo = new UserInfo(body);
+    public RegisterHandler(Request request) {
+        this.userInfo = request.getOptBody().map(body -> new UserInfo(body)).orElse(null);
+        this.request = request;
+    }
+
+    @Override
+    public boolean isExecute() {
+        return request.isPost() && request.corresponds("/create");
     }
 
     public Response handle() {

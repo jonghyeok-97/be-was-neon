@@ -2,6 +2,7 @@ package webserver.handler;
 
 import http.Cookie;
 import http.SessionManager;
+import http.requestMessage.Request;
 import http.requestMessage.RequestHeader;
 import http.responseMessage.Response;
 import http.responseMessage.StatusLine;
@@ -11,9 +12,16 @@ import java.util.Optional;
 
 public class LogOutHandler implements Handler {
     private final RequestHeader header;
+    private final Request request;
 
-    LogOutHandler(RequestHeader header) {
-        this.header = header;
+    public LogOutHandler(Request request) {
+        this.header = request.getHeader();
+        this.request = request;
+    }
+
+    @Override
+    public boolean isExecute() {
+        return request.isPost() && request.corresponds("/logout");
     }
 
     @Override

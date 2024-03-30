@@ -2,7 +2,7 @@ package webserver.handler;
 
 import http.Cookie;
 import http.SessionManager;
-import http.requestMessage.RequestBody;
+import http.requestMessage.Request;
 import http.responseMessage.Response;
 import http.responseMessage.StatusLine;
 import webserver.db.Database;
@@ -15,9 +15,16 @@ public class LoginHandler implements Handler{
     private static final String LOGIN_SUCCESS_PATH = "/main/index.html";
     private final FileHandler fileHandler = new FileHandler(LOGIN_SUCCESS_PATH);
     private final UserInfo userInfo;
+    private final Request request;
 
-    LoginHandler(RequestBody body) {
-        this.userInfo = new UserInfo(body);
+    public LoginHandler(Request request) {
+        this.userInfo = request.getOptBody().map(body -> new UserInfo(body)).orElse(null);
+        this.request = request;
+    }
+
+    @Override
+    public boolean isExecute() {
+        return request.isPost() && request.corresponds("/login");
     }
 
     public Response handle() {

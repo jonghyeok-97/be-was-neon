@@ -34,7 +34,11 @@ public class Request {
         }
     }
 
-    // inner class로 만든 메소들 테스트 어떻게..?
+    public boolean corresponds(String path) {
+        return line.corresponds(path);
+    }
+
+
     private class RequestFactory {
         final List<String> messages;
 
