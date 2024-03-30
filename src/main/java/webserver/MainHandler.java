@@ -2,13 +2,13 @@ package webserver;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import webserver.handler.Handler;
-import webserver.handler.HandlerMapper;
+import webserver.handler.*;
 import http.requestMessage.Request;
 import http.responseMessage.Response;
 
 import java.io.*;
 import java.net.Socket;
+import java.util.List;
 
 public class MainHandler implements Runnable {
     private static final Logger logger = LoggerFactory.getLogger(MainHandler.class);
@@ -27,8 +27,10 @@ public class MainHandler implements Runnable {
             final String requestMessage = getRequestMessage(in);
 
             final Request request = new Request(requestMessage);
-            final HandlerMapper handlerMapper = new HandlerMapper(request);
-            final Handler handler = handlerMapper.find();
+            final Handlers handlers = new Handlers(List.of(
+                    new GetHandler(request), new LoginHandler(request), new LogOutHandler(request)
+                    , new RegisterHandler(request), new UserListHandler(request)));
+            final Handler handler = handlers.find();
             final Response response = handler.handle();
 
             final BufferedOutputStream bos = new BufferedOutputStream(out);

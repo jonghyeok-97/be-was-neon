@@ -1,6 +1,7 @@
 package webserver.handler;
 
 import http.SessionManager;
+import http.requestMessage.Request;
 import http.requestMessage.RequestHeader;
 import http.responseMessage.Response;
 import http.responseMessage.StatusLine;
@@ -13,9 +14,16 @@ import java.util.stream.Collectors;
 
 public class UserListHandler implements Handler {
     private final RequestHeader header;
+    private final Request request;
 
-    UserListHandler(RequestHeader header) {
-        this.header = header;
+    public UserListHandler(Request request) {
+        this.header = request.getHeader();
+        this.request = request;
+    }
+
+    @Override
+    public boolean isExecute() {
+        return request.isGet() && request.corresponds("/user/list");
     }
 
     @Override

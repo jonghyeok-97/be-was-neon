@@ -20,4 +20,8 @@ public class Uri {
     public String getUri() {
         return uri;
     }
+
+    public boolean corresponds(String path) {
+        return uri.equals(path);
+    }
 }
