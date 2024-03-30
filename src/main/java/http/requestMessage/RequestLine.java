@@ -32,4 +32,8 @@ public class RequestLine {
     Uri getUri() {
         return uri;
     }
+
+    public boolean corresponds(String path) {
+        return uri.corresponds(path);
+    }
 }
