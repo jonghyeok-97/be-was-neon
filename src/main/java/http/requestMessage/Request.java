@@ -4,10 +4,7 @@ import http.CRLF;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.regex.PatternSyntaxException;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -95,6 +92,10 @@ public class Request {
 
     public Optional<RequestBody> getOptBody() {
         return optBody;
+    }
+
+    public Map<String, String> getBodyKeyValue() {
+        return optBody.get().getKeyValue();
     }
 }
 
