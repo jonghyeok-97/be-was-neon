@@ -7,12 +7,14 @@ import webserver.db.Database;
 import webserver.model.User;
 import webserver.path.BasicPath;
 
+import java.util.Map;
+
 public class RegisterHandler implements Handler {
-    private final UserInfo userInfo;
+    private final Map<String, String> bodyKeyValues;
     private final Request request;
 
     public RegisterHandler(Request request) {
-        this.userInfo = request.getOptBody().map(body -> new UserInfo(body)).orElse(null);
+        this.bodyKeyValues = request.getBodyKeyValue();
         this.request = request;
     }
 
@@ -22,9 +24,9 @@ public class RegisterHandler implements Handler {
     }
 
     public Response handle() {
-        final String userId = userInfo.get("userId");
-        final String password = userInfo.get("password");
-        final String name = userInfo.get("name");
+        final String userId = bodyKeyValues.get("userId");
+        final String password = bodyKeyValues.get("password");
+        final String name = bodyKeyValues.get("name");
 
         final User user = User.createUserForRegister(userId, password, name);
         Database.addUser(user);
