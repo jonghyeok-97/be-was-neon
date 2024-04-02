@@ -29,10 +29,6 @@ public class RequestLine {
         return method.isGet();
     }
 
-    Uri getUri() {
-        return uri;
-    }
-
     public boolean corresponds(String path) {
         return uri.corresponds(path);
     }
