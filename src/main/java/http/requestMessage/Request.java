@@ -82,16 +82,20 @@ public class Request {
         return line.isPOST();
     }
 
+    public boolean corresponds(String path) {
+        return line.corresponds(path);
+    }
+
+    public boolean hasResource() {
+        return line.hasResource();
+    }
+
+    public Optional<String> getSessionID() {
+        return headers.getSessionID();
+    }
+
     public RequestHeader getHeader() {
         return headers;
-    }
-
-    public Uri getUri() {
-        return line.getUri();
-    }
-
-    public Optional<RequestBody> getOptBody() {
-        return optBody;
     }
 
     public Map<String, String> getBodyKeyValue() {
