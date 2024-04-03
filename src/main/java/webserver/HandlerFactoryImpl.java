@@ -19,8 +19,8 @@ public class HandlerFactoryImpl implements HandlerFactory{
                 new GetHandler(new StaticFile(request.getUri())),
                 new LoginHandler(request),
                 new LogOutHandler(request),
-                new RegisterHandler(request),
-                new ListHandler(request)
+                new RegisterHandler(request.getBodyKeyValue()),
+                new UserListHandler(request)
         );
     }
 }
