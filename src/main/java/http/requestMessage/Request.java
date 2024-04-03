@@ -74,6 +74,10 @@ public class Request {
             }
         }
 
+    public String getUri() {
+        return line.getUri();
+    }
+
     public boolean isGet() {
         return line.isGet();
     }
