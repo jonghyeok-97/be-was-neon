@@ -1,8 +1,8 @@
-package webserver.authentication;
+package webserver.handler.authentication;
 
 import http.Cookie;
 import http.Property;
-import http.SessionManager;
+import http.SessionDB;
 import http.responseMessage.Response;
 import http.responseMessage.StatusLine;
 import org.slf4j.Logger;
@@ -41,7 +41,7 @@ public class Login implements UserAuthentication {
 
     private String createSessionID() {
         String sid = UUID.randomUUID().toString();
-        while (SessionManager.hasSessionID(sid)) {
+        while (SessionDB.hasSessionID(sid)) {
             sid = UUID.randomUUID().toString();
         }
         return sid;
@@ -55,7 +55,7 @@ public class Login implements UserAuthentication {
 
     @Override
     public void handleSessionDB() {
-        SessionManager.add(sessionID, user.getUserId());
+        SessionDB.add(sessionID, user.getUserId());
     }
 
     @Override

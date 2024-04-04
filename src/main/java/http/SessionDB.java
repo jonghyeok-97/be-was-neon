@@ -1,15 +1,13 @@
 package http;
 
-import webserver.model.User;
-
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class SessionManager {
-    private static final Map<String, User> sessionStorage = new ConcurrentHashMap<>();
+public class SessionDB {
+    private static final Map<String, String> sessionStorage = new ConcurrentHashMap<>();
 
-    private SessionManager(){}
+    private SessionDB(){}
 
     public static String createSessionID() {
         String sid = UUID.randomUUID().toString();
@@ -19,8 +17,8 @@ public class SessionManager {
         return sid;
     }
 
-    public static void add(String sid, User user) {
-        sessionStorage.put(sid, user);
+    public static void add(String sid, String userID) {
+        sessionStorage.put(sid, userID);
     }
 
     public static void delete(String sessionId) {

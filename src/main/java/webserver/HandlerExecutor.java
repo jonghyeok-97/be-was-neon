@@ -1,4 +1,4 @@
-package webserver.handler;
+package webserver;
 
 import http.responseMessage.Response;
 import webserver.IHandlerMapper;
