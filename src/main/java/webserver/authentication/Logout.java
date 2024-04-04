@@ -5,11 +5,12 @@ import http.Property;
 import http.SessionManager;
 import http.responseMessage.Response;
 import http.responseMessage.StatusLine;
-import webserver.path.BasicPath;
 
 import java.util.List;
 
 public class Logout implements UserAuthentication {
+    private static final String HOME = "/index.html";
+
     private final String sessionID;
 
     public Logout(final String sessionID) {
@@ -29,7 +30,7 @@ public class Logout implements UserAuthentication {
     @Override
     public Response getSuccessResponse() {
         return new Response.Builder(StatusLine.Found_302)
-                .location(BasicPath.HOME.getPath())
+                .location(HOME)
                 .setCookie(createCookie())
                 .build();
     }
