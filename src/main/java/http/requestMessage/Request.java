@@ -94,7 +94,7 @@ public class Request {
         return line.hasResource();
     }
 
-    public Optional<String> getSessionID() {
+    public String getSessionID() {
         return headers.getSessionID();
     }
 
