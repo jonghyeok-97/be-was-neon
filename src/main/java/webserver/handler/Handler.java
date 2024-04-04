@@ -5,6 +5,4 @@ import http.responseMessage.Response;
 public interface Handler {
 
     Response handle();
-
-    boolean isExecute();
 }
