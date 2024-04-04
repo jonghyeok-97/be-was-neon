@@ -8,7 +8,6 @@ import http.responseMessage.Response;
 
 import java.io.*;
 import java.net.Socket;
-import java.util.List;
 
 public class MainHandler implements Runnable {
     private static final Logger logger = LoggerFactory.getLogger(MainHandler.class);
@@ -27,11 +26,8 @@ public class MainHandler implements Runnable {
             final String requestMessage = getRequestMessage(in);
 
             final Request request = new Request(requestMessage);
-            final Handlers handlers = new Handlers(List.of(
-                    new GetHandler(request), new LoginHandler(request), new LogOutHandler(request)
-                    , new RegisterHandler(request), new UserListHandler(request)));
-            final Handler handler = handlers.find();
-            final Response response = handler.handle();
+            final HandlerExecutor handlerExecutor = new HandlerExecutor(new IHandlerMapperImpl(request));
+            final Response response = handlerExecutor.execute();
 
             final BufferedOutputStream bos = new BufferedOutputStream(out);
             final DataOutputStream dos = new DataOutputStream(bos);
