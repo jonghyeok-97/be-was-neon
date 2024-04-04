@@ -1,30 +1,21 @@
 package http;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
+
+import static java.util.stream.Collectors.joining;
 
 public class Cookie {
-    private final Map<String, String> attributes;
+    private final List<Property> properties;
 
-    public Cookie() {
-        attributes = new LinkedHashMap<>();
+    public Cookie(List<Property> _properties) {
+        this.properties = new ArrayList<>(_properties);
+
     }
 
-    public Cookie set(final String key, final String value) {
-        attributes.put(key, value);
-        return this;
-    }
-
-    public String getCookie() {
-        final StringBuilder sb = new StringBuilder();
-        attributes.forEach((key, value) -> {
-            final String cookieMessage = convertToMessage(key, value);
-            sb.append(cookieMessage);
-        });
-        return sb.toString();
-    }
-
-    private String convertToMessage(final String key, final String value) {
-        return key + "=" + value + ";";
+    public String getProperties() {
+        return properties.stream()
+                .map(Property::getMessage)
+                .collect(joining(" "));
     }
 }
