@@ -11,7 +11,7 @@ public class AuthenticationHandler implements Handler{
     }
 
     @Override
-    public Response handle() {
+    public Response start() {
         if (userAuthentication.isPass()) {
             userAuthentication.handleSessionDB();
             return userAuthentication.getSuccessResponse();

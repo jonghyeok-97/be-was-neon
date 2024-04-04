@@ -1,7 +1,7 @@
 package webserver;
 
 import http.responseMessage.Response;
-import webserver.IHandlerMapper;
+import webserver.handler.Handler;
 
 public class HandlerExecutor {
     private final IHandlerMapper IHandlerMapper;
@@ -12,6 +12,7 @@ public class HandlerExecutor {
 
 
     public Response execute() {
-        return IHandlerMapper.find().handle();
+        Handler handler = IHandlerMapper.findHandler();
+        return handler.start();
     }
 }

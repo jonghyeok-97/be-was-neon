@@ -18,7 +18,7 @@ public class GetHandler implements Handler {
     }
 
     @Override
-    public Response handle() {
+    public Response start() {
         try {
             return new Response.Builder(StatusLine.OK_200)
                     .contentType(abstractFile.findSubTypeOfMIME())

@@ -4,5 +4,5 @@ import http.responseMessage.Response;
 
 public interface Handler {
 
-    Response handle();
+    Response start();
 }
