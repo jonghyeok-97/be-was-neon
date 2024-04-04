@@ -14,20 +14,29 @@ import webserver.model.User;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
 public class Login implements UserAuthentication {
-    public static final String LOGIN_SUCCESS_PATH = "/main/index.html";
-    private static final String LOGIN_FAILED_PATH = "/login/failed_index.html";
     private static final Logger logger = LoggerFactory.getLogger(Login.class);
 
-    private final User user;
-    private final String sessionID;
+    private static final String LOGIN_SUCCESS_PATH = "/main/index.html";
+    private static final String LOGIN_FAILED_PATH = "/login/failed_index.html";
 
-    public Login(User user) {
-        this.user = user;
+    private final String sessionID;
+    private final User user;  // 요청한 유저
+    private Optional<User> foundUser; // DB에서 찾은 유저
+
+    public Login(Map<String, String> userInfos) {
+        this.user = createLoginUser(userInfos);
         this.sessionID = createSessionID();
+    }
+
+    private User createLoginUser(Map<String, String> userInfos) {
+        final String userID = userInfos.get("userId");
+        final String password = userInfos.get("password");
+        return User.createUserForLogin(userID, password);
     }
 
     private String createSessionID() {
@@ -40,18 +49,18 @@ public class Login implements UserAuthentication {
 
     @Override
     public boolean isPass() {
-        Optional<User> optUser = Database.findUserById(user.getUserId());
-        return optUser.filter(found -> found.equals(user)).isPresent();
+        foundUser = Database.findUserById(user.getUserId());
+        return foundUser.filter(found -> found.isSame(user)).isPresent();
     }
 
     @Override
     public void handleSessionDB() {
-        SessionManager.add(sessionID, user);
+        SessionManager.add(sessionID, user.getUserId());
     }
 
     @Override
     public Response getSuccessResponse() {
-        AbstractFile abstractFile = new DynamicFile(LOGIN_SUCCESS_PATH, user.getName());
+        AbstractFile abstractFile = new DynamicFile(LOGIN_SUCCESS_PATH, foundUser.get().getName());
         try {
             return new Response.Builder(StatusLine.OK_200)
                     .contentType(abstractFile.findSubTypeOfMIME())
