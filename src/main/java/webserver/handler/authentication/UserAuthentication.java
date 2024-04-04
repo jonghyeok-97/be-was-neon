@@ -1,4 +1,4 @@
-package webserver.authentication;
+package webserver.handler.authentication;
 
 import http.responseMessage.Response;
 
