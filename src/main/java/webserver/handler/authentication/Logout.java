@@ -1,8 +1,8 @@
-package webserver.authentication;
+package webserver.handler.authentication;
 
 import http.Cookie;
 import http.Property;
-import http.SessionManager;
+import http.SessionDB;
 import http.responseMessage.Response;
 import http.responseMessage.StatusLine;
 
@@ -19,12 +19,12 @@ public class Logout implements UserAuthentication {
 
     @Override
     public boolean isPass() {
-        return SessionManager.hasSessionID(sessionID);
+        return SessionDB.hasSessionID(sessionID);
     }
 
     @Override
     public void handleSessionDB() {
-        SessionManager.delete(sessionID);
+        SessionDB.delete(sessionID);
     }
 
     @Override

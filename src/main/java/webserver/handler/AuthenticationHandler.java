@@ -1,7 +1,7 @@
 package webserver.handler;
 
 import http.responseMessage.Response;
-import webserver.authentication.UserAuthentication;
+import webserver.handler.authentication.UserAuthentication;
 
 public class AuthenticationHandler implements Handler{
     private final UserAuthentication userAuthentication;

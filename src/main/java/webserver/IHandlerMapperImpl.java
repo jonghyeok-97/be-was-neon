@@ -1,9 +1,9 @@
 package webserver;
 
 import http.requestMessage.Request;
-import webserver.authentication.Login;
-import webserver.authentication.Logout;
-import webserver.authentication.UserList;
+import webserver.handler.authentication.Login;
+import webserver.handler.authentication.Logout;
+import webserver.handler.authentication.UserList;
 import webserver.file.StaticFile;
 import webserver.handler.AuthenticationHandler;
 import webserver.handler.GetHandler;
