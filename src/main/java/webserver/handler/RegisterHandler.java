@@ -4,20 +4,16 @@ import http.responseMessage.Response;
 import http.responseMessage.StatusLine;
 import webserver.db.Database;
 import webserver.model.User;
-import webserver.path.BasicPath;
 
 import java.util.Map;
 
 public class RegisterHandler implements Handler {
+    private static final String HOME = "/index.html";
+
     private final Map<String, String> userInfos;
 
     public RegisterHandler(Map<String, String> userInfos) {
         this.userInfos = userInfos;
-    }
-
-    @Override
-    public boolean isExecute() {
-        return request.isPost() && request.corresponds("/create");
     }
 
     public Response handle() {
@@ -25,7 +21,7 @@ public class RegisterHandler implements Handler {
         Database.addUser(user);
 
         return new Response.Builder(StatusLine.Found_302)
-                .location(BasicPath.HOME.getPath())
+                .location(HOME)
                 .build();
     }
 
