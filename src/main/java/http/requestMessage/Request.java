@@ -4,7 +4,10 @@ import http.CRLF;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 import java.util.regex.PatternSyntaxException;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -30,11 +33,6 @@ public class Request {
             throw new IllegalArgumentException("404에러");
         }
     }
-
-    public boolean corresponds(String path) {
-        return line.corresponds(path);
-    }
-
 
     private class RequestFactory {
         final List<String> messages;
@@ -71,35 +69,15 @@ public class Request {
                         final String body = messages.get(bodyPosition);
                         return new RequestBody(body);
                     });
-            }
         }
+    }
 
     public String getUri() {
         return line.getUri();
     }
 
-    public boolean isGet() {
-        return line.isGet();
-    }
-
-    public boolean isPost() {
-        return line.isPOST();
-    }
-
-    public boolean corresponds(String path) {
-        return line.corresponds(path);
-    }
-
-    public boolean hasResource() {
-        return line.hasResource();
-    }
-
     public String getSessionID() {
         return headers.getSessionID();
-    }
-
-    public RequestHeader getHeader() {
-        return headers;
     }
 
     public Map<String, String> getBodyKeyValue() {
