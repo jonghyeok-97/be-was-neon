@@ -18,7 +18,7 @@ public class IHandlerMapperImpl implements IHandlerMapper {
     }
 
     @Override
-    public Handler find() {
+    public Handler findHandler() {
         String uri = request.getUri();
         if ("/login".equals(uri)) {
             return new AuthenticationHandler(new Login(request.getBodyKeyValue()));
