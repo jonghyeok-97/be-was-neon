@@ -16,7 +16,7 @@ public class RegisterHandler implements Handler {
         this.userInfos = userInfos;
     }
 
-    public Response handle() {
+    public Response start() {
         User user = createUser();
         Database.addUser(user);
 
