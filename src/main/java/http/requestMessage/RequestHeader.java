@@ -16,13 +16,14 @@ public class RequestHeader {
         this.headers = headers;
     }
 
-    public Optional<String> getSessionID() {
-        final Optional<String> optCookieLine = Optional.ofNullable(headers.get("Cookie"));
+    public String getSessionID() {
+        Optional<String> optCookieLine = Optional.ofNullable(headers.get("Cookie"));
         return optCookieLine.map(cookieLine -> cookieLine.split(";"))
                 .flatMap(cookies -> Stream.of(cookies)
                         .filter(cookie -> cookie.contains("SID"))
                         .map(sidLine -> sidLine.trim().split("=")[1])
-                        .findFirst());
+                        .findFirst())
+                .orElseThrow(() -> new IllegalArgumentException("404에러. 세션ID를 못찾습니다."));
     }
 
     Optional<Integer> getContentLength() {

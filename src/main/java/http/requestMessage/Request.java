@@ -34,7 +34,6 @@ public class Request {
         }
     }
 
-    // inner class로 만든 메소들 테스트 어떻게..?
     private class RequestFactory {
         final List<String> messages;
 
@@ -70,27 +69,19 @@ public class Request {
                         final String body = messages.get(bodyPosition);
                         return new RequestBody(body);
                     });
-            }
         }
-
-    public boolean isGet() {
-        return line.isGet();
     }
 
-    public boolean isPost() {
-        return line.isPOST();
-    }
-
-    public RequestHeader getHeader() {
-        return headers;
-    }
-
-    public Uri getUri() {
+    public String getUri() {
         return line.getUri();
     }
 
-    public Optional<RequestBody> getOptBody() {
-        return optBody;
+    public String getSessionID() {
+        return headers.getSessionID();
+    }
+
+    public Map<String, String> getBodyKeyValue() {
+        return optBody.get().getKeyValue();
     }
 }
 

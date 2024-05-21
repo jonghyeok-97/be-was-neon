@@ -40,7 +40,7 @@ public class Response {
         }
 
         public Builder setCookie(final Cookie cookie) {
-            headers.append(CRLF.addNewLine("Set-Cookie: " + cookie.getCookie()));
+            headers.append(CRLF.addNewLine("Set-Cookie: " + cookie.getProperties()));
             return this;
         }
 

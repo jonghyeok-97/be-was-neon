@@ -29,9 +29,8 @@ public class User {
         return name;
     }
 
-    public boolean hasPassword(final String password) {
-        Objects.requireNonNull(password, "password는 null이 될 수 없습니다");
-        return Objects.equals(this.password, password);
+    public boolean isSame(final User other) {
+        return Objects.equals(this.password, password) && Objects.equals(this.userId, other.userId);
     }
 
     @Override

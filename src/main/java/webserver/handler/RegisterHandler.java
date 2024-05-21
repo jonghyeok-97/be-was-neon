@@ -1,29 +1,35 @@
 package webserver.handler;
 
-import http.requestMessage.RequestBody;
 import http.responseMessage.Response;
 import http.responseMessage.StatusLine;
 import webserver.db.Database;
 import webserver.model.User;
-import webserver.path.BasicPath;
+
+import java.util.Map;
 
 public class RegisterHandler implements Handler {
-    private final UserInfo userInfo;
+    private static final String HOME = "/index.html";
 
-    RegisterHandler(RequestBody body) {
-        this.userInfo = new UserInfo(body);
+    private final Map<String, String> userInfos;
+
+    public RegisterHandler(Map<String, String> userInfos) {
+        this.userInfos = userInfos;
     }
 
-    public Response handle() {
-        final String userId = userInfo.get("userId");
-        final String password = userInfo.get("password");
-        final String name = userInfo.get("name");
-
-        final User user = User.createUserForRegister(userId, password, name);
+    public Response start() {
+        User user = createUser();
         Database.addUser(user);
 
         return new Response.Builder(StatusLine.Found_302)
-                .location(BasicPath.HOME.getPath())
+                .location(HOME)
                 .build();
+    }
+
+    private User createUser() {
+        final String userId = userInfos.get("userId");
+        final String password = userInfos.get("password");
+        final String name = userInfos.get("name");
+
+        return User.createUserForRegister(userId, password, name);
     }
 }

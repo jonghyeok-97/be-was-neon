@@ -13,10 +13,6 @@ public class Uri {
         this.uri = uri;
     }
 
-    public boolean isSame(final String other) {
-        return uri.equals(other);
-    }
-
     public String getUri() {
         return uri;
     }

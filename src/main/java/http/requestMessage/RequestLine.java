@@ -21,15 +21,7 @@ public class RequestLine {
         uri = new Uri(splited[URI_POSITION]);
     }
 
-    boolean isPOST() {
-        return method.isPOST();
-    }
-
-    boolean isGet() {
-        return method.isGet();
-    }
-
-    Uri getUri() {
-        return uri;
+    public String getUri() {
+        return uri.getUri();
     }
 }

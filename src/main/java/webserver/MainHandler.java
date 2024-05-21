@@ -2,8 +2,6 @@ package webserver;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import webserver.handler.Handler;
-import webserver.handler.HandlerMapper;
 import http.requestMessage.Request;
 import http.responseMessage.Response;
 
@@ -27,9 +25,8 @@ public class MainHandler implements Runnable {
             final String requestMessage = getRequestMessage(in);
 
             final Request request = new Request(requestMessage);
-            final HandlerMapper handlerMapper = new HandlerMapper(request);
-            final Handler handler = handlerMapper.find();
-            final Response response = handler.handle();
+            final HandlerExecutor handlerExecutor = new HandlerExecutor(new IHandlerMapperImpl(request));
+            final Response response = handlerExecutor.execute();
 
             final BufferedOutputStream bos = new BufferedOutputStream(out);
             final DataOutputStream dos = new DataOutputStream(bos);
